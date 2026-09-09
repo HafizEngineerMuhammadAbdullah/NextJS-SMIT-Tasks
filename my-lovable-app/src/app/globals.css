@@ -1,0 +1,103 @@
+/* @import "tailwindcss";
+
+:root {
+  --background: #fffdfb;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+  min-height: 100vh;
+  color: var(--foreground);
+  background: #fffdfb;
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 31% 38% at 24% 106%, rgba(255, 35, 121, 0.98) 0%, rgba(255, 104, 222, 0.88) 39%, rgba(255, 104, 222, 0) 76%),
+    radial-gradient(ellipse 31% 38% at 76% 106%, rgba(255, 35, 121, 0.98) 0%, rgba(255, 104, 222, 0.88) 39%, rgba(255, 104, 222, 0) 76%),
+    radial-gradient(ellipse 38% 47% at 50% 78%, rgba(75, 115, 255, 0.96) 0%, rgba(113, 160, 255, 0.72) 42%, rgba(113, 160, 255, 0) 78%),
+    linear-gradient(180deg, #fffdfb 0%, #fffdfb 31%, #f3f7ff 52%, #fff3fb 100%);
+  transform: translateY(9%) scale(1.04);
+  animation: lovable-gradient-rise 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes lovable-gradient-rise {
+  from {
+    opacity: 0;
+    transform: translateY(15%) scale(1.08);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+    transform: none;
+  }
+} */
+
+
+@import "tailwindcss";
+
+:root {
+  --background: #fafaf9;
+  --foreground: #09090b;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  color: var(--foreground);
+  background-color: var(--background);
+  overflow-x: hidden;
+}
+
+/* Lovable Ambient Bottom Glow */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: 
+    /* Bottom Right Magenta/Pink Glow */
+    radial-gradient(circle 600px at 70% 95%, rgba(255, 30, 130, 0.35), transparent 70%),
+    /* Bottom Left Coral/Pink Glow */
+    radial-gradient(circle 500px at 30% 90%, rgba(255, 90, 160, 0.3), transparent 70%),
+    /* Center Blue Ambient Core */
+    radial-gradient(circle 700px at 50% 85%, rgba(60, 130, 255, 0.25), transparent 80%),
+    /* Subtle Grid Overlay */
+    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  animation: lovable-glow-fade 1.2s ease-out forwards;
+}
+
+@keyframes lovable-glow-fade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
