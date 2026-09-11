@@ -25,7 +25,7 @@ const Button = ({ children, variant = 'primary', className = '', ...props }) => 
 
   return (
     <button 
-      className={`${baseStyles} ${variants[variant]} ${className}`}
+      className={`${baseStyles} cursor-pointer ${variants[variant]} ${className}`}
       {...props}
     >
       {children}

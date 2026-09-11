@@ -18,23 +18,50 @@
 // export default Input
 
 
-
+"use client"
 import React from 'react'
 import { GoPlusCircle } from "react-icons/go";
 import { TiMicrophoneOutline } from "react-icons/ti";
 import { FiArrowUp } from "react-icons/fi";
+import { TypeAnimation } from 'react-type-animation';
 
 const Input = () => {
   return (
     <div className='w-full max-w-2xl px-4'>
       <div className='relative bg-white/80 backdrop-blur-xl border border-zinc-200/80 rounded-2xl p-4 shadow-xl shadow-pink-500/5 hover:border-zinc-300 transition-all focus-within:border-zinc-400 focus-within:ring-4 focus-within:ring-zinc-100'>
-        
-        <textarea 
+
+        {/* <textarea
           rows={3}
+          // placeholder='Ask Lovable to create a dashboard to...' 
+          > */}
+
+        <p
           className='w-full bg-transparent outline-none resize-none text-zinc-800 placeholder:text-zinc-400 text-base sm:text-lg'
-          placeholder='Ask Lovable to create a dashboard to...' 
-        />
-        
+        >
+          <TypeAnimation
+            sequence={[
+              'Ask Lovable to create a dashboard to...',
+              1000, // Waits 1s
+              'Ask Lovable to create a landing page for my...',
+              2000, // Waits 2s
+              'Ask Lovable to create a prototype for my...',
+              2000, // Waits 2s
+              'Ask Lovable to create an internal tool that...',
+              2000, // Waits 2s
+              'Ask Lovable to create a blog about...',
+              2000, // Waits 2s
+              'Ask Lovable to create a web app that...',
+              () => {
+                console.log('Sequence completed');
+              },
+            ]}
+            wrapper="span"
+            cursor={true}
+            repeat={Infinity}
+            style={{ fontSize: '2em', display: 'inline-block' }}
+          />
+        </p>
+
         <div className='flex justify-between items-center mt-2 pt-2 border-t border-zinc-100'>
           <div className='flex items-center gap-2'>
             <button className='p-2 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 rounded-lg transition-colors'>

@@ -47,6 +47,7 @@ const Navbar = () => {
           <NavLinks>Community</NavLinks>
           <NavLinks>Enterprise</NavLinks>
           <NavLinks>Pricing</NavLinks>
+          <NavLinks>Security</NavLinks>
         </div>
         
         {/* CTA Buttons */}
