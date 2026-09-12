@@ -1,5 +1,4 @@
 "use client"
-// Add this below <Input /> in Hero.jsx
 const PRESET_PROMPTS = [
   "📊 Analytics Dashboard",
   "🚀 SaaS Landing Page",

@@ -1,20 +1,3 @@
-// import Headings from './Headings'
-// import Input from './Input'
-
-// const Hero = () => {
-//   return (
-//     <div className='h-165 w-full flex flex-col gap-10 justify-center items-center'>
-//         < Headings/>
-//         <Input />
-        
-//     </div>
-    
-//   )
-// }
-
-// export default Hero
-
-
 import React from 'react'
 import Headings from './Headings'
 import Input from './Input'

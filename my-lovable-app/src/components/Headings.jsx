@@ -1,18 +1,3 @@
-// import React from 'react'
-
-// const Headings = () => {
-//   return (
-//     <div className='text-center'>
-//         <h1 className='font-bold text-6xl'>Build something Lovable</h1>
-//         <p className='mt-3 font-light text-2xl text-gray-700 '>Bring a new product, internal tool, or entire company to life.   </p>
-//     </div>
-//   )
-// }
-
-// export default Headings
-
-
-
 import React from 'react'
 
 const Headings = () => {

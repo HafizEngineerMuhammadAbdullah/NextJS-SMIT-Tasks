@@ -1,18 +1,3 @@
-// import Link from 'next/link'
-// import React from 'react'
-
-// const NavLinks = ({ children }) => {
-//     return (
-//         <div className='font-medium font-mono'>
-//             <Link href={`/${children}`}>
-//                 {children}</Link>
-//         </div>
-//     )
-// }
-
-// export default NavLinks
-
-
 import Link from 'next/link'
 import React from 'react'
 
