@@ -4,9 +4,17 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div>
+    // <div>
+    //   <Navbar />
+    //   <Hero />
+    // </div>
+
+
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <Hero />
+      <main className="flex-1">
+        <Hero />
+      </main>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import Image from 'next/image'
 function Logo() {
   return (
     <div>
-      <Image src="/logoblack.svg" width={140} height={50} alt='Lovable' />
+      <Image src="/logoblack.svg" width={130} height={50} alt='Lovable' />
     </div>
   )
 }
