@@ -1,11 +1,8 @@
 "use client";
 
-const TreeForm = ({
-  location,
-  formData,
-  setFormData,
-  onSave,
-}) => {
+const TreeForm = ({ location, formData, setFormData, onSave }) => {
+  // Initially, location = null, Therefore !location = true and the form isn't shown.
+  // After clicking:   location = {lat, lng} Therefore, !location = false and the form is shown(and React renders the actual form.)
   if (!location) {
     return (
       <div className="rounded-lg border bg-white p-5">
@@ -37,6 +34,7 @@ const TreeForm = ({
       return;
     }
 
+    // Call the onSave function passed from the parent component (Home) to save the tree data.
     onSave();
   };
 

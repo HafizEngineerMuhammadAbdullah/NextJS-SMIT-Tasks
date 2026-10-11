@@ -88,3 +88,67 @@ Because Leaflet's CSS is required, add this in app/globals.css:
 6. A green tree marker appears at that location.
 7. Clicking the marker shows the s*aved tree detai*ls.
 8. Refreshing the page keeps all previously planted trees.
+
+
+                    Home
+                     │
+          ┌──────────┴──────────┐
+          ↓                     ↓
+        Map                  TreeForm
+          │                     │
+   User clicks map       User enters name
+          │                     │
+          ↓                     ↓
+   latitude/longitude    formData
+          │                     │
+          └──────────┬──────────┘
+                     ↓
+              handleSaveTree()
+                     ↓
+                newTree object
+                     ↓
+                  trees[]
+                     ↓
+              localStorage
+                     ↓
+              Map re-renders
+                     ↓
+                 🌳 Marker
+
+
+
+BEFORE CLICK
+
+┌──────────── MAP ────────────┐
+│                             │
+│                             │
+└─────────────────────────────┘
+
+┌──── FORM ───────────────────┐
+│ Click anywhere on map       │
+└─────────────────────────────┘
+
+
+AFTER CLICK
+
+┌──────────── MAP ────────────┐
+│             📍              │
+└─────────────────────────────┘
+
+┌──── FORM ───────────────────┐
+│ User Name: ______           │
+│ Tree Name: ______           │
+│ Lat: 24.871234              │
+│ Lng: 67.034567              │
+│                             │
+│       🌳 Plant Tree         │
+└─────────────────────────────┘
+
+
+Next.js
+   │
+   ├── Server rendering
+   │       ❌ Leaflet
+   │
+   └── Browser
+           ✅ Leaflet

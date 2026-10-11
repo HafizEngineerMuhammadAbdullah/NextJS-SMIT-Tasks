@@ -6,22 +6,43 @@ import dynamic from "next/dynamic";
 import useLocalStorage from "../hooks/useLocalStorage";
 import TreeForm from "../components/TreeForm";
 
+
+
+// Leaflet relies heavily on the browser environment.
+// But Next.js can render components on the server.
+// The server doesn't have things like:
+// window
+// document
+// browser map APIs
+// This is one of the important Next.js-specific reasons behind this code.
 const Map = dynamic(
   () => import("../components/Map"),
   {
-    ssr: false,
+    ssr: false,//Don't render this Map component on the server. Load it only in the browser.
   }
 );
 
 export default function Home() {
-
+  
+  // It synchronizes the state with browser localStorage.
   const [trees, setTrees] = useLocalStorage(
-    "trees",
-    []
+    "trees",//key
+    []//initialValue
   );
 
-  const [location, setLocation] = useState("");
+  // No location has been selected yet
+  // After clicking:
+  // setLocation({ lat: 24.871234, lng: 67.034567 });
+  // location
+  //  ↓
+  //  {
+  //   lat: 24.871234,
+  //   lng: 67.034567
+  //  }
+  const [location, setLocation] = useState(null);
 
+
+  // User Data (UserName + TreeName)
   const [formData, setFormData] = useState({
     userName: "",
     treeName: "",
@@ -31,8 +52,12 @@ export default function Home() {
     setLocation(location);
   };
 
+
+  // You're creating a database-like record.
   const handleSaveTree = () => {
 
+    if (!location) return;
+    
     const newTree = {
       id: Date.now(),
 
@@ -62,13 +87,21 @@ export default function Home() {
   };
 
   return (
+
+    // Main Page
     <main className="min-h-screen bg-gray-100 p-6">
-
+      {/* Center Div Element */}
       <div className="mx-auto max-w-7xl">
+       
 
-        <h1 className="mb-2 text-3xl font-bold text-green-700">
-          🌳 Tree Planting Application
-        </h1>
+        {/* Main Heading */}
+        <div className="flex items-center gap-x-3">
+          <p className="text-3xl font-bold mb-2">🌳</p>
+          <h1 className="mb-2 text-3xl font-bold font-mono bg-linear-to-r from-green-300 via-green-600 to-green-950 text-transparent bg-clip-text">
+            Tree Planting Map Application
+          </h1>
+        </div>
+
 
         <p className="mb-6 text-gray-600">
           Click on the map, select a location and plant
@@ -77,7 +110,7 @@ export default function Home() {
 
         <div className="grid gap-6 lg:grid-cols-3">
 
-          {/* Map */}
+          {/* Actual Map */}
           <div className="lg:col-span-2">
             <Map
               trees={trees}
