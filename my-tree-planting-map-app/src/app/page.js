@@ -145,18 +145,27 @@ export default function Home() {
 
 
             {/* Total Trees Block */}
-            <div className="mt-4 border border-gray-800 rounded-lg bg-white p-4 flex justify-around transition-all hover:-translate-y-1">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center bg-green-900 border border-gray-800">
-                <p className="mt-1 text-3xl font-bold  text-green-600">
+            {/* Tree Count Component */}
+            <section
+              aria-label="Tree planting total"
+              className="group mt-4 flex items-center justify-between overflow-hidden rounded-xl border border-green-200 bg-gradient-to-br from-white to-green-50 p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+            >
+              <div>
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-green-800">
+                  Trees planted
+                </h2>
+                <p className="mt-1 text-4xl font-bold leading-none text-green-700">
                   {trees.length}
                 </p>
               </div>
 
-              <h2 className="font-semibold flex items-center ">
-                Total Trees
-              </h2>
-
-            </div>
+              <div
+                aria-hidden="true"
+                className="flex size-14 items-center justify-center rounded-full bg-green-100 text-3xl ring-1 ring-green-200 transition-transform duration-200 group-hover:scale-105"
+              >
+                🌳
+              </div>
+            </section>
 
           </div>
 

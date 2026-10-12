@@ -5,6 +5,13 @@ This folder contains the university app project and related task files for the N
 ## Contents
 
 - `university-app/` — the main Next.js application
+- [`shadcn-card/`](./shadcn-card/) — Shadcn card project
+- [`MyInstagramApp/`](./MyInstagramApp/) — Instagram-style app
+
+## Live Demos
+
+- [Shadcn Card](https://shadcn-card.vercel.app/)
+- [Instagram App](https://instagram-app-chi.vercel.app/)
 
 ## Notes
 
