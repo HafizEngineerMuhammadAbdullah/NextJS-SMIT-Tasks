@@ -21,7 +21,7 @@ const useLocalStorage = (key, initialValue) => {
   // Save data to localStorage
   // Because localStorage stores strings, an array/object must be converted: JSON.stringify(...)
   // Effect #2 — save changes
-  // React State  ←────────────→  localStorage
+  // React State  ←────────────→  localStorage 
   useEffect(() => {
     localStorage.setItem(key, JSON.stringify(value));// Whenever the value changes, save it to localStorage.
   }, [key, value]);

@@ -5,6 +5,9 @@ import dynamic from "next/dynamic";
 
 import useLocalStorage from "../hooks/useLocalStorage";
 import TreeForm from "../components/TreeForm";
+import { ToastContainer } from "react-toastify";
+import { database } from '@/lib/firebase';
+import { ref, onValue } from 'firebase/database';
 
 
 
@@ -23,12 +26,16 @@ const Map = dynamic(
 );
 
 export default function Home() {
-  
+
   // It synchronizes the state with browser localStorage.
   const [trees, setTrees] = useLocalStorage(
     "trees",//key
     []//initialValue
   );
+
+
+
+
 
   // No location has been selected yet
   // After clicking:
@@ -56,8 +63,10 @@ export default function Home() {
   // You're creating a database-like record.
   const handleSaveTree = () => {
 
+    console.log("hello");
+
     if (!location) return;
-    
+
     const newTree = {
       id: Date.now(),
 
@@ -72,6 +81,10 @@ export default function Home() {
       date: new Date().toLocaleDateString(),
     };
 
+    console.log(newTree);
+
+
+    // update trees data
     setTrees([
       ...trees,
       newTree,
@@ -91,9 +104,8 @@ export default function Home() {
     // Main Page
     <main className="min-h-screen bg-gray-100 p-6">
       {/* Center Div Element */}
-      <div className="mx-auto max-w-7xl">
-       
 
+      <div className="mx-auto max-w-7xl">
         {/* Main Heading */}
         <div className="flex items-center gap-x-3">
           <p className="text-3xl font-bold mb-2">🌳</p>
@@ -102,15 +114,16 @@ export default function Home() {
           </h1>
         </div>
 
-
+        {/* Description */}
         <p className="mb-6 text-gray-600">
           Click on the map, select a location and plant
           your tree.
         </p>
 
+        {/* Map  Grid(Left Side + Right Side)*/}
         <div className="grid gap-6 lg:grid-cols-3">
-
           {/* Actual Map */}
+          {/* Left Div */}
           <div className="lg:col-span-2">
             <Map
               trees={trees}
@@ -118,8 +131,11 @@ export default function Home() {
             />
           </div>
 
-          {/* Form */}
+
+          {/* Right Div */}
+
           <div>
+            {/* Tree Form */}
             <TreeForm
               location={location}
               formData={formData}
@@ -127,14 +143,19 @@ export default function Home() {
               onSave={handleSaveTree}
             />
 
-            <div className="mt-4 rounded-lg bg-white p-4">
-              <h2 className="font-semibold">
+
+            {/* Total Trees Block */}
+            <div className="mt-4 border border-gray-800 rounded-lg bg-white p-4 flex justify-around transition-all hover:-translate-y-1">
+              <div className="w-12 h-12 rounded-full flex items-center justify-center bg-green-900 border border-gray-800">
+                <p className="mt-1 text-3xl font-bold  text-green-600">
+                  {trees.length}
+                </p>
+              </div>
+
+              <h2 className="font-semibold flex items-center ">
                 Total Trees
               </h2>
 
-              <p className="mt-1 text-3xl font-bold text-green-600">
-                {trees.length}
-              </p>
             </div>
 
           </div>
@@ -142,7 +163,8 @@ export default function Home() {
         </div>
 
       </div>
-
+      {/* Toast Container */}
+      <ToastContainer></ToastContainer>
     </main>
   );
 }
