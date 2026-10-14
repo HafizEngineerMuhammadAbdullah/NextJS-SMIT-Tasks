@@ -5,13 +5,16 @@ import { useEffect, useState } from "react";
 // Now the part that makes the data survive page refresh: localStorage
 // Browser provides: localStorage which is essentially a small persistent key-value storage.
 const useLocalStorage = (key, initialValue) => {
+  // initially key = 'trees',  intialValue = []
   const [value, setValue] = useState(initialValue);
-
-  // Get data from localStorage
+  // value = [](empty array)
+  // Get/Retrieve data from localStorage
   // Effect #1 — load existing data
   useEffect(() => {
     const storedData = localStorage.getItem(key);
 
+
+    // if data exists, load it into React state. If not, use the initial value.
     if (storedData) {
       // turns it back into JavaScript data.
       setValue(JSON.parse(storedData));
