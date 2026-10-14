@@ -3,18 +3,23 @@ import React from 'react'
 
 const Stories = ({ path }) => {
 
-  return (
-    // <div className='overflow-hidden w-16 h-16 rounded-full bg-linear-to-r from-cyan-500 to-blue-500 p-[2px] cursor-pointer'>
-    // <div className='overflow-hidden w-16 h-16 rounded-full border-2 [border-image:linear-gradient(to_right,teal,blue)_1]  p-[2px] cursor-pointer'>
-    // Parent container holds the gradient and defines the border thickness via padding
-    <div className='overflow-hidden w-16 h-16 rounded-full bg-linear-to-r from-[#fcb045] via-[#f31414]  to-[#eb0ea9] p-1 cursor-pointer'>
-      {/* Inner container has your card background */}
-      <div className='h-full w-full rounded-full'>
-        <Image src={path} alt="story" width={50} height={50} className='w-full h-full rounded-full bg-cover' />
-      </div>
-    </div>
+  // This is a performance optimization warning from Next.js (specifically from the next/image component), not a breaking error.
+  // Next.js automatically detects which image takes the longest to render on the initial screen—known as the Largest Contentful Paint(LCP).By default, Next.js lazy - loads images to save bandwidth.However, if an image is "above the fold"(visible immediately when the page loads without scrolling), lazy loading it delays the page load and hurts your SEO and user experience scores.
 
-  )
+  // To resolve this warning, add the priority property (or loading="eager", though priority is preferred in Next.js) to your Image component. This tells Next.js to preload the image immediately.
+
+    return(
+      // <div className='overflow-hidden w-16 h-16 rounded-full bg-linear-to-r from-cyan-500 to-blue-500 p-[2px] cursor-pointer'>
+      // <div className='overflow-hidden w-16 h-16 rounded-full border-2 [border-image:linear-gradient(to_right,teal,blue)_1]  p-[2px] cursor-pointer'>
+      // Parent container holds the gradient and defines the border thickness via padding
+      <div className='overflow-hidden w-16 h-16 rounded-full bg-linear-to-r from-[#fcb045] via-[#f31414]  to-[#eb0ea9] p-1 cursor-pointer'>
+        {/* Inner container has your card background */}
+        <div className='h-full w-full rounded-full'>
+          <Image src={path} alt="story" width={50} height={50} className='w-full h-full rounded-full bg-cover' priority />
+        </div>
+      </div>
+
+    )
 }
 
 export default Stories
