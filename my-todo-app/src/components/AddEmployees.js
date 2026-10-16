@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import styles from '../addEmp.module.css'
+import styles from './addEmp.module.css'
 import { useDispatch } from 'react-redux';
-import { addEmployee } from '../reduxToolkit/slice';
+import { addEmployee } from '../reduxjs-toolkit-for-state-management/slice';
 import Link from 'next/link';
 
 const AddEmployees = () => {

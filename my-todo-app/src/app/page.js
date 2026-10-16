@@ -1,4 +1,5 @@
 import AddEmployees from '@/components/AddEmployees'
+import ShowEmployees from '@/components/ShowEmployees'
 import React from 'react'
 
 const page = () => {

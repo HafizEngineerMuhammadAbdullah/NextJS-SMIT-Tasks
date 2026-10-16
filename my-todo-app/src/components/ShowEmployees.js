@@ -1,7 +1,7 @@
 'use client'
 import { useDispatch, useSelector } from 'react-redux';
-import styles from '../showEmp.module.css';
-import { removeEmployee } from '../reduxToolkit/slice';
+import styles from './addEmp.module.css';
+import { removeEmployee } from '../reduxjs-toolkit-for-state-management/slice';
 
 const ShowEmployees = () => {
   const employeeData = useSelector((data) => data.employeeData.employees);
