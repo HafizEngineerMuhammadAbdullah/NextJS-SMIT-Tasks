@@ -10,7 +10,43 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --animate-my-pulse: my-pulse 2s infinite;
+
+  /* Creates a Glow Effect */
+  @keyframes my-pulse {
+    0% {
+      box-shadow: 0 0 0 0 /* var(--color-emerald-200) */ rgba(34,197,94,0.4);
+    }
+
+    70% {
+      box-shadow: 0 0 0 10px /* var(--color-emerald-300) */ rgba(34,197,94,0);
+    }
+
+    100% {
+      box-shadow: 0 0 0 10px /*var(--color-emerald-300)*/ rgba(34,197,94,0);
+    }
+  }
 }
+
+
+
+/* @theme inline {
+  --animate-my-pulse: my-pulse 2s ease-out infinite;
+
+  @keyframes my-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgb(16 185 129 / 45%);
+    }
+
+    70% {
+      box-shadow: 0 0 0 7px rgb(16 185 129 / 0%);
+    }
+
+    100% {
+      box-shadow: 0 0 0 0 rgb(16 185 129 / 0%);
+    }
+  }
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -24,3 +60,8 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+/* @theme {
+
+} */

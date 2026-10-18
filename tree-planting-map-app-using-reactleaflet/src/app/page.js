@@ -8,6 +8,9 @@ import { database } from "@/lib/firebase";
 import TreeForm from "../components/TreeForm";
 
 import "react-toastify/dist/ReactToastify.css";
+import Header from "@/components/Header";
+import Box1 from "@/components/Box1";
+import Box2 from "@/components/Box2";
 
 const Map = dynamic(() => import("../components/Map"), {
   ssr: false,
@@ -31,17 +34,20 @@ export default function Home() {
   // Subscribe to Firebase. Updates arrive automatically.
   useEffect(() => {
     const treesRef = ref(database, "trees");
+    console.log(treesRef);
+
 
     const unsubscribe = onValue(
       treesRef,
       (snapshot) => {
         const data = snapshot.val();
+        console.log(data);
 
         const loadedTrees = data
           ? Object.entries(data).map(([id, tree]) => ({
-              ...tree,
-              id,
-            }))
+            ...tree,
+            id,
+          }))
           : [];
 
         setTrees(loadedTrees);
@@ -88,29 +94,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#f5f8f2] text-slate-800">
-      <header className="border-b border-emerald-100 bg-white">
-        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-5 py-5 sm:px-8">
-          <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-emerald-100 text-2xl">
-              🌳
-            </div>
-            <div>
-              <h1 className="text-xl font-extrabold tracking-tight text-emerald-950 sm:text-2xl">
-                GreenRoots
-              </h1>
-              <p className="text-xs text-slate-500 sm:text-sm">
-                Every tree makes a difference.
-              </p>
-            </div>
-          </div>
-
-          <div className="hidden items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800 sm:flex">
-            <span className="size-2 rounded-full bg-emerald-500" />
-            Community planting map
-          </div>
-        </div>
-      </header>
-
+      {/* Header */}
+      <Header />
+      
       <div className="mx-auto max-w-[1500px] px-4 py-7 sm:px-8 sm:py-10">
         <section className="mb-8">
           <p className="mb-2 text-sm font-bold uppercase tracking-[0.18em] text-emerald-700">
@@ -125,36 +111,14 @@ export default function Home() {
             your community grow a greener future.
           </p>
         </section>
+        
 
         <section className="mb-6 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm hover:-translate-y-1 transition-transform">
-            <p className="text-sm font-medium text-slate-500">
-              Community trees
-            </p>
-            <div className="mt-2 flex items-end justify-between">
-              <p className="text-4xl font-extrabold text-emerald-800">
-                {loading ? "—" : trees.length}
-              </p>
-              <span className="text-3xl">🌲</span>
-            </div>
-            <p className="mt-2 text-sm text-slate-500">
-              Trees recorded by the community
-            </p>
-          </div>
+          {/* Box-1 */}
+           <Box1 loading={loading} trees={trees}/>
 
-          <div className="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm hover:-translate-y-1 transition-transform">
-            <p className="text-sm font-medium text-slate-500">
-              Selected location
-            </p>
-            <p className="mt-2 text-xl font-bold text-slate-800">
-              {location ? "Location selected" : "Choose a spot"}
-            </p>
-            <p className="mt-2 text-sm text-slate-500">
-              {location
-                ? `${location.lat.toFixed(4)}, ${location.lng.toFixed(4)}`
-                : "Click anywhere on the map to begin."}
-            </p>
-          </div>
+          {/* Box-2 */}
+           <Box2 location={location} />
         </section>
 
         <section className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(320px,0.8fr)]">

@@ -22,7 +22,12 @@ const Slice = createSlice({
                 id: nanoid(),
                 name: action.payload
             }
-            state.employees.push(data)
+            console.log("Action : ",action);
+            console.log("State : ",state);
+            
+            state.employees.push(data);
+            console.log("Employees from Slice : ", state.employees);
+            
             // let empData = JSON.stringify(current(state.employees));
             // localStorage.setItem("emp",empData);
         },
@@ -30,7 +35,7 @@ const Slice = createSlice({
             state.employees = state.employees.filter(item => item.id !== action.payload);
             // localStorage.setItem("emp", JSON.stringify(state.employees));
         }
-    }
+    },
     // extraReducers: (builder) => {
     //     builder.addCase(apiData.pending, (state) => {
     //         state.isLoading = true;
