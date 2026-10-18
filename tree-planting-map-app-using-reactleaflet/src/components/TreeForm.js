@@ -3,18 +3,12 @@
 import Image from "next/image";
 import { toast } from "react-toastify";
 
-export default function TreeForm({
-  location,
-  formData,
-  setFormData,
-  onSave,
-  saving = false,
-}) {
+export default function TreeForm({ location, formData, setFormData, onSave, saving = false }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData((previous) => ({
-      ...previous,
+    setFormData((previousFormData) => ({
+      ...previousFormData,
       [name]: value,
     }));
   };
@@ -36,9 +30,12 @@ export default function TreeForm({
   };
 
   return (
-    <section className="overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-sm">
+    <section className="overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-md hover:shadow-green-400 hover:-translate-y-1 transition-all">
+      {/* Top Most Form Side */}
       <div className="bg-gradient-to-br from-emerald-900 to-emerald-700 p-5 text-white">
+        {/* LeftSide */}
         <div className="flex items-center gap-3">
+          {/* Image Component */}
           <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-white/15">
             <Image
               src="/assets/tree.png"
@@ -48,17 +45,20 @@ export default function TreeForm({
               className="object-contain"
             />
           </div>
-
+          {/* MiddleSide */}
           <div>
             <h2 className="text-xl font-bold">Plant a tree</h2>
             <p className="mt-1 text-sm text-emerald-100">
               Add your contribution to the map.
             </p>
           </div>
+
         </div>
       </div>
 
+      {/* Actual User Form */}
       <form onSubmit={handleSubmit} className="space-y-5 p-5">
+        {/* For Username */}
         <div>
           <label
             htmlFor="userName"
@@ -80,6 +80,7 @@ export default function TreeForm({
           />
         </div>
 
+        {/* for TreeName/Tree Species */}
         <div>
           <label
             htmlFor="treeName"
@@ -100,23 +101,32 @@ export default function TreeForm({
           />
         </div>
 
+        {/* for Longitude & Latitude */}
         <div className="rounded-xl border border-emerald-100 bg-emerald-50/70 p-4">
+          {/* Top Side */}
           <div className="mb-3 flex items-center justify-between gap-2">
+            {/* LeftSide */}
             <p className="text-sm font-bold text-emerald-950">
               Planting coordinates
             </p>
+            {/* RightSide */}
             <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
               {location ? "Selected" : "Not selected"}
             </span>
           </div>
 
+           {/* Bottom Side */}
           <div className="grid grid-cols-2 gap-3">
+            
+            {/* LeftSide */}
             <div className="min-w-0">
               <label className="text-xs text-slate-500">Latitude</label>
               <p className="mt-1 break-all font-mono text-sm font-semibold text-slate-800">
                 {location ? location.lat.toFixed(6) : "—"}
               </p>
             </div>
+
+            {/* RightSide */}
             <div className="min-w-0">
               <label className="text-xs text-slate-500">Longitude</label>
               <p className="mt-1 break-all font-mono text-sm font-semibold text-slate-800">
@@ -125,7 +135,8 @@ export default function TreeForm({
             </div>
           </div>
         </div>
-
+          
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={!location || saving}
@@ -140,10 +151,12 @@ export default function TreeForm({
             <>🌱 Plant my tree</>
           )}
         </button>
-
+         
+         {/* Bottom Most Side/Form Footer */}
         <p className="text-center text-xs leading-5 text-slate-500">
           Your tree will appear on the shared map after it is saved.
         </p>
+
       </form>
     </section>
   );

@@ -1,35 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { ref, push, onValue } from "firebase/database";
 import { toast, ToastContainer } from "react-toastify";
 import { database } from "@/lib/firebase";
-import TreeForm from "../components/TreeForm";
 
 import "react-toastify/dist/ReactToastify.css";
 import Header from "@/components/Header";
-import Box1 from "@/components/Box1";
-import Box2 from "@/components/Box2";
+import Footer from "@/components/Footer";
+import Section1 from "@/components/Section1";
+import Section3 from "@/components/Section3";
+import Section2 from "@/components/Section2";
 
-const Map = dynamic(() => import("../components/Map"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-[500px] items-center justify-center rounded-2xl bg-emerald-50 text-emerald-800">
-      Loading interactive map...
-    </div>
-  ),
-});
+
+const INITIAL_FORM_DATA = {
+  userName: "",
+  treeName: "",
+}
 
 export default function Home() {
+  // trees: Array of tree objects fetched from Firebase when component mount & updates the trees when new trees are added.
+  // Holds the tree records received from Firebase
   const [trees, setTrees] = useState([]);
+  // location: The selected location on the map where the user wants to plant a tree.
+  // Holds the location currently selected on the map
   const [location, setLocation] = useState(null);
+  // Your other two state variables are loading and saving. They control the UI while data is being fetched or saved.
+  // loading: A boolean state to indicate whether the trees are being loaded from Firebase.
   const [loading, setLoading] = useState(true);
+  // saving: A boolean state to indicate whether the tree is being saved to Firebase.
   const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState({
-    userName: "",
-    treeName: "",
-  });
+  // formData: The data entered by the user in the form, including their name and the name of the tree.
+  // Holds what the user is typing
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   // Subscribe to Firebase. Updates arrive automatically.
   useEffect(() => {
@@ -81,7 +84,7 @@ export default function Home() {
       await push(ref(database, "trees"), newTree);
 
       // The onValue listener updates the map and count.
-      setFormData({ userName: "", treeName: "" });
+      setFormData(INITIAL_FORM_DATA);
       setLocation(null);
       toast.success("Your tree has been planted on the map!");
     } catch (error) {
@@ -96,75 +99,28 @@ export default function Home() {
     <main className="min-h-screen bg-[#f5f8f2] text-slate-800">
       {/* Header */}
       <Header />
-      
+
+      {/* Main Content/Body */}
       <div className="mx-auto max-w-[1500px] px-4 py-7 sm:px-8 sm:py-10">
-        <section className="mb-8">
-          <p className="mb-2 text-sm font-bold uppercase tracking-[0.18em] text-emerald-700">
-            Grow a greener tomorrow
-          </p>
-          <h2 className="max-w-3xl text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Make your mark.
-            <span className="text-emerald-700"> Plant a tree.</span>
-          </h2>
-          <p className="mt-3 max-w-2xl leading-7 text-slate-600">
-            Choose a spot on the map, record your tree, and help
-            your community grow a greener future.
-          </p>
-        </section>
-        
+        {/* Section - 1(Top Section) */}
+        <Section1 />
 
-        <section className="mb-6 grid gap-4 sm:grid-cols-2">
-          {/* Box-1 */}
-           <Box1 loading={loading} trees={trees}/>
+        {/* Section - 2(Middle Section) */}
+        <Section2 loading={loading} trees={trees} location={location} />
 
-          {/* Box-2 */}
-           <Box2 location={location} />
-        </section>
+        {/* Section - 3 (Bottom Section)*/}
+        <Section3
+          trees={trees}
+          location={location}
+          setLocation={setLocation}
+          formData={formData}
+          setFormData={setFormData}
+          handleSaveTree={handleSaveTree}
+          saving={saving}
+        />
 
-        <section className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(320px,0.8fr)]">
-          <div className="overflow-hidden rounded-2xl border border-emerald-100 bg-white p-3 shadow-sm sm:p-4">
-            <div className="flex flex-wrap items-center justify-between gap-3 px-1 pb-4">
-              <div>
-                <h3 className="font-bold text-slate-900">
-                  Explore the planting map
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">
-                  Select a location to place your next tree.
-                </p>
-              </div>
-              <span className="rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
-                {trees.length} {trees.length === 1 ? "tree" : "trees"} mapped
-              </span>
-            </div>
-
-            <div className="overflow-hidden rounded-xl">
-              <Map trees={trees} onMapClick={setLocation} />
-            </div>
-          </div>
-
-          <aside className="space-y-5">
-            <TreeForm
-              location={location}
-              formData={formData}
-              setFormData={setFormData}
-              onSave={handleSaveTree}
-              saving={saving}
-            />
-
-            <div className="rounded-2xl bg-emerald-950 p-5 text-white shadow-sm hover:-translate-y-1.5 transition-transform">
-              <p className="text-lg font-bold">Small action, lasting impact.</p>
-              <p className="mt-2 text-sm leading-6 text-emerald-100">
-                Record your planting location and inspire others to
-                contribute to a greener community.
-              </p>
-              <div className="mt-4 text-3xl">🌱 🌿 🌳</div>
-            </div>
-          </aside>
-        </section>
-
-        <footer className="py-8 text-center text-sm text-slate-500">
-          Built for a greener future · GreenRoots
-        </footer>
+        {/* For Footer */}
+        <Footer />
       </div>
 
       <ToastContainer position="top-right" autoClose={3000} />
