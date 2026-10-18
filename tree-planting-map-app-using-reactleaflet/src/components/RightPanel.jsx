@@ -1,6 +1,8 @@
 import React from 'react'
 import TreeForm from "../components/TreeForm";
 
+
+// Your separation is sensible. Section3 itself doesn't save anything; it only composes LeftPanel and RightPanel. I would correct its current comment to reflect that.
 const RightPanel = ({ location, formData, setFormData, handleSaveTree, saving }) => {
     return (
         <aside className="space-y-5">

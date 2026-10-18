@@ -2,6 +2,10 @@ import React from 'react'
 import dynamic from "next/dynamic";
 
 // Map component is dynamically imported to prevent server-side rendering issues with Leaflet.
+// Leaflet accesses browser APIs, so dynamically import the map
+// with SSR disabled to avoid server-side rendering issues.
+// To prevent the map component from rendering on the server side, we use Next.js's dynamic import with SSR disabled. This ensures that the map is only rendered on the client side, where browser APIs are available.
+// Leaflet depends on browser APIs, so the map is loaded on the client
 const Map = dynamic(() => import("../components/Map"), {
     ssr: false,
     loading: () => (

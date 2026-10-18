@@ -12,11 +12,15 @@ import L from "leaflet";
 import MapClickHandler from "./MapClickHandler";
 
 const treeIcon = new L.Icon({
-  iconUrl: "/tree-marker.png",
+  iconUrl: "/assets/Treeicon.png",
   iconSize: [40, 40],
   iconAnchor: [20, 40],
   popupAnchor: [0, -36],
 });
+
+
+// Map and MapClickHandler — geographical interaction
+// Map displays the tiles and markers. MapClickHandler listens for map clicks and passes latitude and longitude to the parent through a callback.
 
 export default function Map({ trees, onMapClick }) {
   return (
