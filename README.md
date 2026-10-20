@@ -12,6 +12,8 @@ This folder contains the university app project and related task files for the N
 
 - [Shadcn Card](https://shadcn-card.vercel.app/)
 - [Instagram App](https://instagram-app-chi.vercel.app/)
+- [My Tree Planting Map App](https://next-js-smit-tasks.vercel.app/)
+
 
 ## Notes
 
