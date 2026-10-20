@@ -1,5 +1,5 @@
 import { TbCheck } from "react-icons/tb";
-const options = [
+export const options = [
   {
     icon: TbCheck,
     backgroundColor: '#534AB7',
@@ -25,4 +25,4 @@ const options = [
 ];
 
 
-export { options };
+// export { options };
