@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import styles from './SignupForm.module.css';
+// import styles from './SignupForm.module.css';
 import { TbBolt } from 'react-icons/tb'
 import { motion } from 'motion/react';
 import { options } from '@/data/core';
@@ -19,12 +19,12 @@ const LeftPanel = () => {
         initial={{ opacity: 0, x: -1500 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9 }}
-        className={`${styles.leftPanel} relative flex flex-col md:justify-between gap-y-10 bg-[#1A1A2E] px-10 py-8`
+        className={`leftPanel relative flex flex-col md:justify-between gap-y-10 bg-[#1A1A2E] px-10 py-8`
         }
       >
 
         {/* for Left Upper Panel */}
-        < div className={`${styles.upperLeftPanel}`}>
+        < div className={`upperLeftPanel`}>
           <div className='h-10 w-10 flex justify-center items-center rounded-xl bg-[#534AB7] '>
             < TbBolt color='white' size={22} />
           </div>
@@ -34,14 +34,14 @@ const LeftPanel = () => {
         </div >
 
         {/* for Left Lower Panel */}
-        < div className={`${styles.lowerLeftPanel}`}>
+        < div className={`lowerLeftPanel`}>
           {
             options.map((item, idx) => {
               return (
-                <div key={idx} className={`${styles.options} h-10 flex gap-3 items-center`}>
+                <div key={idx} className={`options h-10 flex gap-3 items-center`}>
 
                   {/* Icon(if any) */}
-                  <div className={`${styles.icon} h-7 w-7 flex justify-center items-center rounded-full border`} style={{
+                  <div className={`icon h-7 w-7 flex justify-center items-center rounded-full border`} style={{
                     backgroundColor: item.backgroundColor,
                     color: item.color,
                     borderColor: item.borderColor
@@ -53,7 +53,7 @@ const LeftPanel = () => {
                   </div>
 
                   {/* Textual Content */}
-                  <div className={`${styles.textContent} text-md font-medium`} style={{ color: item.contentColor }} >{item.content}</div>
+                  <div className={`textContent text-md font-medium`} style={{ color: item.contentColor }} >{item.content}</div>
                 </div>
               )
             })

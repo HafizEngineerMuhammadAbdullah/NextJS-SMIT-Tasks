@@ -16,7 +16,7 @@ const LeftPanel = () => {
                 <p className='text-white w-85'>Please sign in or sign up with your Google account to get started.</p>
                 {/* Signin Option */}
                 <div className='mt-2'>
-                    <p className='text-[#9595B6] text-sm text-center'>Don't have an account? <Link href={"/"} className='ml-1 text-[#534AB7] cursor-pointer'>Create an account</Link></p>
+                    <p className='text-[#9595B6] text-sm text-center'>Don't have an account? <Link href={"/signupform"} className='ml-1 text-[#534AB7] cursor-pointer'>Create an account</Link></p>
                 </div>
             </div>
 

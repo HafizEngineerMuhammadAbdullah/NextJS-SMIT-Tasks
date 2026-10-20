@@ -1,12 +1,13 @@
 "use client"
 import React, { useState } from 'react'
-import styles from './SignupForm.module.css';
+// import styles from './SignupForm.module.css';
 import { TbArrowRight, TbEye, TbEyeClosed, TbBrandGoogle, TbBrandGithub, TbPassword } from 'react-icons/tb';
 import { motion } from 'motion/react';
 import InputField from './InputField';
 // import { ref, push } from "firebase/database";
 // import { database } from "../../../configuration/firebase";
 import { ToastContainer, toast } from "react-toastify";
+import Link from 'next/link';
 
 
 const RightPanel = () => {
@@ -232,7 +233,7 @@ const RightPanel = () => {
                 initial={{ opacity: 0, x: 1500 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.9 }}
-                className={`${styles.rightPanel}  flex flex-col gap-y-5 bg-[#2C2C2A] py-4 px-4 sm:px-6 md:px-8 lg:px-9`}>
+                className={`rightPanel  flex flex-col gap-y-5 bg-[#2C2C2A] py-4 px-4 sm:px-6 md:px-8 lg:px-9`}>
 
                 {/* for Heading */}
                 <div>
@@ -250,7 +251,7 @@ const RightPanel = () => {
 
                 {/* User Form */}
                 {/* Controlled Component */}
-                <form className={`${styles.formGrid}`} onSubmit={submitHandler}>
+                <form className={`formGrid`} onSubmit={submitHandler}>
 
                     {/* Row-1 */}
                     {/* <div className='flex flex-col md:flex-row gap-3 items-center'> */}
@@ -264,7 +265,7 @@ const RightPanel = () => {
                             id='firstname'
                             placeholder="Thomas"
                             changeHandler={changeHandler}
-                            myClass={`${styles.input}`}
+                            myClass={`input`}
                             autoComplete="given-name"
                             pattern="[A-Za-z]{3,20}"
                             title="Only letters allowed"
@@ -279,7 +280,7 @@ const RightPanel = () => {
                             value={formData.lastName}
                             placeholder="John"
                             changeHandler={changeHandler}
-                            myClass={`${styles.input}`}
+                            myClass={`input`}
                             autoComplete="family-name"
                             pattern="[A-Za-z]{3,20}"
                             title="Only letters allowed"
@@ -296,7 +297,7 @@ const RightPanel = () => {
                         value={formData.email}
                         placeholder="John@example.com"
                         changeHandler={changeHandler}
-                        myClass={`${styles.input}`}
+                        myClass={`input`}
                         autoComplete="email"
                         pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
                         title="Letters & Numbers allowed"
@@ -312,7 +313,7 @@ const RightPanel = () => {
                             name='password'
                             value={formData.password}
                             changeHandler={changeHandler}
-                            myClass={`${styles.input}`}
+                            myClass={`input`}
                             autoComplete="new-password"
                             pattern="[A-Za-z0-9]{7,15}"
                             title="Letters & Numbers allowed"
@@ -373,7 +374,7 @@ const RightPanel = () => {
                         whileTap={{ scale: 0.97 }}>
                         <button
                             type='submit'
-                            className={`${styles.input} ${styles.account} w-full flex justify-center items-center gap-2 text-white text-2xl font-mono font-medium cursor-pointer`}
+                            className={`input account w-full flex justify-center items-center gap-2 text-white text-2xl font-mono font-medium cursor-pointer`}
                         >
                             <TbArrowRight size={20} />
                             {loading ? "Creating..." : "Create Account"}
@@ -395,7 +396,7 @@ const RightPanel = () => {
                             type='button'
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
-                            className={`${styles.input} flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
+                            className={`input flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
                             {/* <div className='h-7 w-7 rounded-full border-2 border-white flex justify-center items-center'>< TbBrandGoogle size={20} /></div> */}
                             < TbBrandGoogle size={20} />
                             <span className='text-white'>Sign up with Google</span>
@@ -404,7 +405,7 @@ const RightPanel = () => {
                             type='button'
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
-                            className={`${styles.input} flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
+                            className={`input flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
                             {/* <div className='h-7 w-7 rounded-full border-2 border-white flex justify-center items-center'>< TbBrandGithub size={20} /></div> */}
                             < TbBrandGithub size={20} />
                             <span className='text-white'>Sign up with Github</span>
@@ -414,7 +415,7 @@ const RightPanel = () => {
                     {/* Row-8 */}
                     {/* Signin Option */}
                     <div className='mt-2'>
-                        <p className='text-[#9595B6] text-sm text-center'>Already have an account? <span className='text-[#534AB7] cursor-pointer'>Sign in</span></p>
+                        <p className='text-[#9595B6] text-sm text-center'>Already have an account? <Link href="/" className='text-[#534AB7] cursor-pointer'>Sign in</Link></p>
                     </div>
 
                     {/* Toast Container */}
