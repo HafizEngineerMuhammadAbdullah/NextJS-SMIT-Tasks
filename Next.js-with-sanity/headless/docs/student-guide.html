@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Saylani Tech Blog — Student Guide</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #1c1915;
+        --muted: #5c564c;
+        --line: #e4ddd2;
+        --paper: #fffdf8;
+        --accent: #1f4d3a;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "Segoe UI", Calibri, sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+      main { max-width: 760px; margin: 0 auto; padding: 36px 28px 64px; }
+      h1 { font-size: 32px; line-height: 1.15; margin: 0 0 8px; }
+      h2 { font-size: 22px; margin: 28px 0 8px; page-break-after: avoid; }
+      h3 { font-size: 17px; margin: 18px 0 6px; page-break-after: avoid; }
+      p, li { orphans: 3; widows: 3; }
+      .kicker {
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: var(--accent);
+        font-weight: 700;
+        margin: 0 0 8px;
+      }
+      .lead { font-size: 17px; color: var(--muted); margin-top: 0; }
+      table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; }
+      th, td { text-align: left; border-bottom: 1px solid var(--line); padding: 8px 8px 8px 0; vertical-align: top; }
+      th { font-size: 13px; color: var(--muted); }
+      code, pre { font-family: Consolas, "Courier New", monospace; font-size: 13px; }
+      code { background: #f3eee6; padding: 1px 5px; border-radius: 4px; }
+      pre {
+        background: #1c1915;
+        color: #f6f1e8;
+        padding: 14px 16px;
+        border-radius: 8px;
+        white-space: pre-wrap;
+        page-break-inside: avoid;
+      }
+      ol.steps { padding-left: 20px; }
+      ol.steps li, ul li { margin: 6px 0; }
+      .note {
+        border-left: 4px solid var(--accent);
+        padding: 8px 14px;
+        background: #f6f3ec;
+        margin: 14px 0;
+      }
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin: 12px 0 18px;
+      }
+      .flow span {
+        background: #f6f3ec;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 13px;
+      }
+      footer { margin-top: 36px; color: var(--muted); font-size: 13px; }
+      @media print {
+        main { padding: 0; max-width: none; }
+        a { color: inherit; text-decoration: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="kicker">Student handout</p>
+      <h1>Saylani Tech Blog</h1>
+      <p class="lead">Basic knowledge, then the steps: install Sanity, learn the folders, connect it to Next.js, and publish a post.</p>
+
+      <table>
+        <tr><th>Website name</th><td>Saylani Tech Blog</td></tr>
+        <tr><th>Sanity project</th><td>saylni-blog</td></tr>
+        <tr><th>Project ID</th><td>o2zj2owv</td></tr>
+        <tr><th>Dataset</th><td>production</td></tr>
+      </table>
+
+      <h2>1. Basic knowledge</h2>
+      <p>This blog has two parts that work together.</p>
+      <table>
+        <tr><th>Part</th><th>What it is</th><th>What you use it for</th></tr>
+        <tr><td>Next.js</td><td>The website</td><td>Pages a reader opens in the browser</td></tr>
+        <tr><td>Sanity</td><td>The content system</td><td>The form where you write and publish posts</td></tr>
+      </table>
+      <p>This is called a <strong>headless CMS</strong>. The writing is not pasted inside a React file. You write it in Sanity. Next.js asks Sanity for the published posts and draws the page.</p>
+      <div class="flow">
+        <span>1. You write in Studio</span>
+        <span>→</span>
+        <span>2. You press Publish</span>
+        <span>→</span>
+        <span>3. Next.js asks Sanity</span>
+        <span>→</span>
+        <span>4. The page shows the post</span>
+      </div>
+      <p>Words you need before the steps:</p>
+      <table>
+        <tr><th>Word</th><th>Plain meaning</th></tr>
+        <tr><td>Project</td><td>Your Sanity space. Ours is named <strong>saylni-blog</strong>.</td></tr>
+        <tr><td>Project ID</td><td>The code uses this, not the name. Ours is <code>o2zj2owv</code>. It is public. It is not a password.</td></tr>
+        <tr><td>Dataset</td><td>The folder of content inside the project. Ours is <code>production</code>.</td></tr>
+        <tr><td>Schema</td><td>The form. This blog has one form, called <code>post</code>.</td></tr>
+        <tr><td>Studio</td><td>The editor, at <code>/studio</code> inside the same Next.js app.</td></tr>
+        <tr><td>GROQ</td><td>The question Next.js sends to Sanity to get posts.</td></tr>
+        <tr><td>Slug</td><td>The URL piece. “My new post” becomes <code>my-new-post</code>.</td></tr>
+        <tr><td>Draft</td><td>A saved post that readers cannot see.</td></tr>
+        <tr><td>Publish</td><td>The button that makes the post public.</td></tr>
+      </table>
+      <div class="note">
+        <strong>Save is not Publish.</strong> Save keeps a private draft. The website shows a post only after Publish.
+      </div>
+
+      <h2>2. What to install first</h2>
+      <p>On your computer, install Node.js 20 or newer. It includes npm. Check it in a terminal:</p>
+      <pre>node -v
+npm -v</pre>
+      <p>You also need a free account at sanity.io. This class already has a project:</p>
+      <ul>
+        <li>Name: <strong>saylni-blog</strong></li>
+        <li>Project ID: <code>o2zj2owv</code></li>
+        <li>Dataset: <code>production</code></li>
+      </ul>
+      <p>If you ever create your own project, the website at sanity.io/manage shows the project ID after you create it. Copy that ID. Do not type the project name into the code where the ID belongs.</p>
+
+      <h2>3. Install Sanity in the Next.js project</h2>
+      <p>Open a terminal in the project folder (the folder that already has <code>package.json</code>). Sanity is added to the Next.js app. It is not a second website.</p>
+      <p>Install the packages:</p>
+      <pre>npm install sanity next-sanity styled-components @sanity/image-url @portabletext/react</pre>
+      <table>
+        <tr><th>Package</th><th>Why it is here</th></tr>
+        <tr><td><code>sanity</code></td><td>The Studio editor</td></tr>
+        <tr><td><code>next-sanity</code></td><td>Connects Studio and data fetching to Next.js</td></tr>
+        <tr><td><code>styled-components</code></td><td>Studio needs this to draw its screens</td></tr>
+        <tr><td><code>@sanity/image-url</code></td><td>Turns a Sanity image into a picture address</td></tr>
+        <tr><td><code>@portabletext/react</code></td><td>Turns the article body into paragraphs and headings</td></tr>
+      </table>
+      <p>This project already has those packages in <code>package.json</code>. On a new computer you only run:</p>
+      <pre>npm install
+npm run dev</pre>
+      <p>Then open <code>http://localhost:3000</code>. Leave the terminal open. Ctrl+C stops the server.</p>
+
+      <h2>4. Folder structure</h2>
+      <p>You do not need every file on day one. These are the ones that connect the blog.</p>
+      <pre>headless/
+  .env.local                         project ID and dataset
+  sanity.config.js                   Studio settings
+  sanity.cli.js                      Sanity command-line settings
+  src/
+    app/
+      (site)/
+        page.js                      home page  →  /
+        blog/page.js                 post list  →  /blog
+        blog/[slug]/page.js          one post   →  /blog/my-new-post
+        about/page.js                about page →  /about
+        layout.js                    header and footer
+      studio/[[...tool]]/
+        page.js                      editor route → /studio
+        studio.js                    mounts Sanity Studio
+    sanity/
+      env.js                         reads the project ID
+      structure.js                   Studio sidebar (Posts)
+      schemas/
+        index.js                     list of forms
+        post.js                      the post form
+      lib/
+        client.js                    the connection to Sanity
+        queries.js                   the GROQ questions
+        posts.js                     functions the pages call
+        image.js                     cover image addresses
+    lib/site.js                      site name and menu
+    components/blog/                 the cards and the article body</pre>
+      <p>Two folder rules:</p>
+      <ul>
+        <li><code>(site)</code> does not appear in the URL. It only groups the public pages so they share a header and footer.</li>
+        <li><code>[slug]</code> means “any post address.” <code>[[...tool]]</code> lets Studio open its own inner pages under <code>/studio</code>.</li>
+      </ul>
+
+      <h2>5. Connect Sanity to Next.js</h2>
+      <p>Connecting means four small jobs: tell Next.js the project ID, let the pages read posts, mount Studio, and describe the post form.</p>
+
+      <h3>Step A — Put the project ID in <code>.env.local</code></h3>
+      <p>Create <code>.env.local</code> in the project root (copy <code>.env.example</code> if you need a start):</p>
+      <pre>NEXT_PUBLIC_SANITY_PROJECT_ID=o2zj2owv
+NEXT_PUBLIC_SANITY_DATASET=production
+NEXT_PUBLIC_SANITY_API_VERSION=2026-10-17
+NEXT_PUBLIC_SITE_URL=http://localhost:3000</pre>
+      <p>Restart <code>npm run dev</code> after you change this file. Next.js reads it only at startup.</p>
+      <p><code>src/sanity/env.js</code> reads those variables. The ID is safe to expose. Never put a Sanity write token in a <code>NEXT_PUBLIC_</code> variable. This blog only reads published posts, so it does not need a token.</p>
+
+      <h3>Step B — The read connection</h3>
+      <p><code>src/sanity/lib/client.js</code> creates the Sanity client with the project ID, the dataset, and <code>perspective: "published"</code>. Pages never talk to Sanity by themselves. The path is:</p>
+      <div class="flow">
+        <span>page.js</span>
+        <span>→</span>
+        <span>getPosts() in posts.js</span>
+        <span>→</span>
+        <span>GROQ in queries.js</span>
+        <span>→</span>
+        <span>client.js</span>
+        <span>→</span>
+        <span>Sanity</span>
+      </div>
+      <p>The home page is an async Server Component. It can wait for the posts before it sends HTML:</p>
+      <pre>const result = await getPosts();</pre>
+      <p>On your computer the client does not cache, so a refresh shows a new post. A deployed site can take about a minute.</p>
+
+      <h3>Step C — Mount Studio inside Next.js</h3>
+      <p><code>sanity.config.js</code> is the Studio setup. It uses the same project ID, the dataset, the post schema, and <code>basePath: "/studio"</code>. The file starts with <code>"use client"</code> because Studio runs in the browser.</p>
+      <p><code>src/app/studio/[[...tool]]/studio.js</code> renders it:</p>
+      <pre>import { NextStudio } from "next-sanity/studio";
+import config from "../../../../sanity.config";
+
+export default function Studio() {
+  return &lt;NextStudio config={config} /&gt;;
+}</pre>
+      <p>Open <code>http://localhost:3000/studio</code> and sign in.</p>
+
+      <h3>Step D — Allow this computer (CORS)</h3>
+      <p>The first time, Sanity may say the Studio is not connected. The project ID is already correct. Sanity is blocking the browser until you allow it.</p>
+      <ol class="steps">
+        <li>Sign in at sanity.io/manage.</li>
+        <li>Open project <strong>saylni-blog</strong>.</li>
+        <li>Add CORS origin <code>http://localhost:3000</code>.</li>
+        <li>Turn on <strong>Allow credentials</strong>.</li>
+        <li>Save, then refresh <code>/studio</code>.</li>
+      </ol>
+      <p>Do not put <code>/studio</code> on the end of the origin.</p>
+
+      <h3>Step E — The post form</h3>
+      <p><code>src/sanity/schemas/post.js</code> is the form: title, slug, short summary, cover image, date, and body. <code>src/sanity/schemas/index.js</code> exports that one schema. <code>src/sanity/structure.js</code> puts <strong>Posts</strong> in the Studio sidebar.</p>
+      <p>After you change the schema file, refresh Studio. The public website still will not show a new field until the query asks for it and a component prints it.</p>
+
+      <h2>6. Publish a post and see it</h2>
+      <ol class="steps">
+        <li>In Studio, open <strong>Posts</strong> and create a post.</li>
+        <li>Type a title.</li>
+        <li>Click <strong>Generate</strong> next to the slug.</li>
+        <li>Add a short summary, a cover image, and some body text.</li>
+        <li>Click <strong>Publish</strong>.</li>
+        <li>Refresh <code>http://localhost:3000</code>.</li>
+      </ol>
+      <p>The post page is <code>http://localhost:3000/blog/</code> plus the slug. Example: <code>http://localhost:3000/blog/my-new-post</code>.</p>
+      <p>If nobody has published a post, the home page says “No posts yet.” That is correct. The site does not invent a sample article.</p>
+
+      <h2>7. When something looks wrong</h2>
+      <table>
+        <tr><th>What you see</th><th>What to do</th></tr>
+        <tr><td>No posts yet, but you clicked Save</td><td>Click Publish, then refresh.</td></tr>
+        <tr><td>You published, and the page is still empty</td><td>Check the slug. Restart <code>npm run dev</code> if you just created <code>.env.local</code>.</td></tr>
+        <tr><td>Studio says it is not connected</td><td>Add CORS origin <code>http://localhost:3000</code> and allow credentials.</td></tr>
+        <tr><td><code>node</code> is not recognized</td><td>Install Node.js, then open a new terminal.</td></tr>
+        <tr><td>A wrong slug</td><td>The not-found page. That is correct.</td></tr>
+      </table>
+
+      <h2>8. Practice</h2>
+      <ol class="steps">
+        <li>Point to the file that holds the project ID.</li>
+        <li>Point to the file that is the post form.</li>
+        <li>Point to the file that asks Sanity for the posts.</li>
+        <li>Publish one post with your name in the title and open it from the home page.</li>
+      </ol>
+      <p>Answers: <code>.env.local</code> (read by <code>src/sanity/env.js</code>), <code>src/sanity/schemas/post.js</code>, and <code>src/sanity/lib/queries.js</code>.</p>
+
+      <footer>
+        Saylani Tech Blog · project saylni-blog · ID o2zj2owv · Lesson notes are in the docs folder, files 00 to 11.
+      </footer>
+    </main>
+  </body>
+</html>

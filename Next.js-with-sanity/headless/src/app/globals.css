@@ -1,0 +1,162 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --ivory: #f7f4ed;
+  --paper: #fffefa;
+  --ink: #191916;
+  --graphite: #77756f;
+  --forest: #243d33;
+  --rust: #b65f43;
+  --line: rgba(25, 25, 22, 0.12);
+  --background: var(--ivory);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--forest);
+  --primary-foreground: #f7f4ed;
+  --secondary: #efeae0;
+  --secondary-foreground: var(--ink);
+  --muted: #efeae0;
+  --muted-foreground: var(--graphite);
+  --accent: #efe6d8;
+  --accent-foreground: var(--ink);
+  --destructive: #8c3a32;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--forest);
+  --radius: 0.4rem;
+}
+
+.dark {
+  --ivory: #141411;
+  --paper: #1c1c18;
+  --ink: #f3eee4;
+  --graphite: #a8a49a;
+  --forest: #b7c9bc;
+  --rust: #e0a08a;
+  --line: rgba(243, 238, 228, 0.14);
+  --background: #141411;
+  --foreground: #f3eee4;
+  --card: #1c1c18;
+  --card-foreground: #f3eee4;
+  --popover: #1c1c18;
+  --popover-foreground: #f3eee4;
+  --primary: #d5e2d8;
+  --primary-foreground: #141411;
+  --secondary: #2a2a26;
+  --secondary-foreground: #f3eee4;
+  --muted: #2a2a26;
+  --muted-foreground: #a8a49a;
+  --accent: #2a2a26;
+  --accent-foreground: #f3eee4;
+  --destructive: #e0a08a;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: #d5e2d8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ivory: var(--ivory);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-forest: var(--forest);
+  --color-rust: var(--rust);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-sans), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), "Times New Roman", serif;
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 8px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), "Inter", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: #e7c7ba;
+    color: #191916;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display), "Times New Roman", serif;
+}
+
+.eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+
+.glass {
+  background: color-mix(in srgb, var(--paper) 78%, transparent);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 40px rgba(25, 25, 22, 0.06);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: fixed;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
