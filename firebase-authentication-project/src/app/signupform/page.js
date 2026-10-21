@@ -1,15 +1,13 @@
 import React from 'react';
-import LeftPanel from './LeftPanel';
-import RightPanel from './RightPanel';
+import SignupForm from './SignupForm';
 
-const SignupForm = () => {
+const page = () => {
 
   return (
-    <div className='w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 overflow-y-auto overflow-x-hidden rounded-2xl'>
-      < LeftPanel />
-      < RightPanel />
+    <div className='w-full min-h-screen flex items-center justify-center p-4'>
+      <SignupForm />
     </div>
   )
 }
 
-export default SignupForm
+export default page;

@@ -9,12 +9,14 @@ import { MdError } from "react-icons/md";
 import { RiSignalWifiErrorFill } from "react-icons/ri";
 import { BiSolidCommentError } from "react-icons/bi";
 import { BiSolidMessageRoundedError } from "react-icons/bi";
+import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from 'react-toastify';
 import { motion } from "motion/react"
+import { BsGithub } from "react-icons/bs";
 import { TbArrowRight, TbEye, TbEyeClosed, TbBrandGoogle, TbBrandGithub, TbPassword } from 'react-icons/tb';
 
 
-const inputStyle = 'w-full p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#1A6C63FF] focus:border-[#6C63FF] transition-colors duration-200 mt-2';
+const inputStyle = 'w-full p-2 rounded-md border border-gray-700 focus:outline-none focus:ring focus:ring-black focus:border-black transition-colors duration-200 mt-2';
 
 //Initial formData
 const INITIAL_FORM_DATA = {
@@ -147,7 +149,7 @@ const Form = () => {
         <form className='h-auto w-full max-w-sm mt-1 space-y-4' onSubmit={submitHandler}>
             {/* for Email: */}
             <div>
-                <label htmlFor="email" className='text-white mb-2'>Email:</label>
+                <label htmlFor="email" className='text-black/80 mb-2'>Email:</label>
                 <input
                     type="email"
                     id="email"
@@ -160,7 +162,7 @@ const Form = () => {
             </div>
             {/* for Password: */}
             <div className="relative">
-                <label htmlFor="password" className='text-white mb-2'>Password:</label>
+                <label htmlFor="password" className='text-black/80 mb-2'>Password:</label>
                 <input
                     type={isShowPassword ? "text" : "password"}
                     id="password"
@@ -170,16 +172,17 @@ const Form = () => {
                     className={inputStyle}
                     required={true}
                 />
-                <button type="button" className='text-gray-300 absolute right-4 top-10.5 cursor-pointer' onClick={togglePasswordVisibility}>
+                <button type="button" className='text-gray-500 absolute right-4 top-10.5 cursor-pointer' onClick={togglePasswordVisibility}>
                     {isShowPassword ? <LuEyeOff size={20} /> : <LuEye size={20} />}
                 </button>
             </div>
+
             {/* for ErrorMessage */}
             <div>
-                {errorMsg ?
-                    <p className='flex gap-2 text-sm text-center text-red-500 font-medium'><BiSolidError size={20} /> {errorMsg}</p> : <TbFaceIdError />
+                {errorMsg && <p className='flex gap-2 text-sm text-center text-red-500 font-medium'><BiSolidError size={20} /> {errorMsg}</p>
                 }
             </div>
+            
 
             <div className='flex justify-between items-center'>
                 <div className='space-x-1'>
@@ -188,15 +191,16 @@ const Form = () => {
                 </div>
                 <p>Forgot password?</p>
             </div>
+
             {/* Submit Button */}
-            <button type="submit" className='w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-colors cursor-pointer'>
+            <button type="submit" className='w-full bg-black text-white text-md font-medium p-2 rounded-md hover:bg-gray-800 transition-colors cursor-pointer'>
                 Continue
             </button>
             {/* OR */}
             <div className='flex items-center'>
-                <p className='bg-black w-1/2 h-0.5'></p>
+                <p className='bg-gray-800 w-1/2 h-0.5'></p>
                 <p className='mx-1.5'>OR</p>
-                <p className='bg-black w-1/2 h-0.5'></p>
+                <p className='bg-gray-800 w-1/2 h-0.5'></p>
             </div>
 
             {/* Signin with Google Or Github */}
@@ -207,8 +211,9 @@ const Form = () => {
                     whileTap={{ scale: 0.97 }}
                     className={`${inputStyle} flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
                     {/* <div className='h-7 w-7 rounded-full border-2 border-white flex justify-center items-center'>< TbBrandGoogle size={20} /></div> */}
-                    < TbBrandGoogle size={20} />
-                    <span className='text-white'>Sign in with Google</span>
+                    {/* < TbBrandGoogle size={20} /> */}
+                    <FcGoogle size={20}/>
+                    <span className='text-black font-medium text-nowrap'>Sign in with Google</span>
                 </motion.button>
                 <motion.button
                     type='button'
@@ -216,8 +221,9 @@ const Form = () => {
                     whileTap={{ scale: 0.97 }}
                     className={`${inputStyle} flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
                     {/* <div className='h-7 w-7 rounded-full border-2 border-white flex justify-center items-center'>< TbBrandGithub size={20} /></div> */}
-                    < TbBrandGithub size={20} />
-                    <span className='text-white'>Sign in with Github</span>
+                    {/* < TbBrandGithub size={20} /> */}
+                    <BsGithub size={20} />
+                    <span className='text-black font-medium text-nowrap'>Sign in with Github</span>
                 </motion.button>
             </div>
             <ToastContainer></ToastContainer>

@@ -19,7 +19,7 @@ const LeftPanel = () => {
         initial={{ opacity: 0, x: -1500 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9 }}
-        className={`leftPanel relative flex flex-col md:justify-between gap-y-10 bg-[#1A1A2E] px-10 py-8`
+        className={`leftPanel relative flex flex-col md:justify-between gap-y-10 bg-[#1A1A2E] px-10 py-8 overflow-hidden`
         }
       >
 

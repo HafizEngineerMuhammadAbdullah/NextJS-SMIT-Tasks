@@ -233,7 +233,7 @@ const RightPanel = () => {
                 initial={{ opacity: 0, x: 1500 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.9 }}
-                className={`rightPanel  flex flex-col gap-y-5 bg-[#2C2C2A] py-4 px-4 sm:px-6 md:px-8 lg:px-9`}>
+                className={`rightPanel flex flex-col gap-y-5 bg-[#2C2C2A] py-4 px-4 sm:px-6 md:px-8 lg:px-9`}>
 
                 {/* for Heading */}
                 <div>
@@ -374,7 +374,7 @@ const RightPanel = () => {
                         whileTap={{ scale: 0.97 }}>
                         <button
                             type='submit'
-                            className={`input account w-full flex justify-center items-center gap-2 text-white text-2xl font-mono font-medium cursor-pointer`}
+                            className={`input account w-full flex justify-center items-center gap-2 text-white text-xl font-mono font-medium cursor-pointer`}
                         >
                             <TbArrowRight size={20} />
                             {loading ? "Creating..." : "Create Account"}
