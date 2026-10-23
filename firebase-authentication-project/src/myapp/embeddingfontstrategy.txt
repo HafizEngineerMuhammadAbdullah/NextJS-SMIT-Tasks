@@ -1,0 +1,135 @@
+To use custom local fonts in a modern Next.js application, you should use the built-in next/font/local module. This tool automatically handles font self-hosting and optimization, completely preventing layout shifts when your pages load. [1] (https://nextjs.org/docs/app/getting-started/fonts), [2] (https://nextjs.org/docs/pages/getting-started/fonts)
+Here is the clean, standard way to implement a custom local font (.woff2, .ttf, or .otf files) and link it up with Tailwind CSS. [1] (https://www.youtube.com/watch?v=HxoAYJw7r5Q&t=630), [2] (https://medium.com/@youness.jabar.pro/how-to-use-custom-fonts-in-next-js-with-tailwind-css-the-clean-way-6a82f0a4781f)
+
+Step 1: Place Your Font Files
+
+Create a folder named fonts inside your src/app/ folder (or your public directory) and paste your font files inside it: [1] (https://www.youtube.com/watch?v=IQ0HJpR1v64&t=119), [2] (https://medium.com/@youness.jabar.pro/how-to-use-custom-fonts-in-next-js-with-tailwind-css-the-clean-way-6a82f0a4781f)
+• 📂 src/
+	• 📂 app/
+		• 📂 fonts/
+			• 📄 CustomFont-Regular.woff2
+			• 📄 CustomFont-Bold.woff2
+(Tip: If possible, use .woff2 files instead of .ttf as they are highly compressed and optimized for web speed). [1] (https://www.contentful.com/blog/next-js-fonts/)
+
+Step 2: Initialize the Local Font
+
+Inside your root layout.js (or layout.tsx), import localFont from next/font/local and define your font configuration: [1] (https://www.youtube.com/watch?v=DqGr8YwO52Q), [2] (https://www.youtube.com/watch?v=HxoAYJw7r5Q&t=630)
+jsx
+// src/app/layout.js
+import localFont from 'next/font/local';
+import './globals.css';
+
+// Configure your custom local font
+const myCustomFont = localFont({
+  src: [
+    {
+      path: './fonts/CustomFont-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/CustomFont-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  // Define a CSS variable name so Tailwind can read it
+  variable: '--font-custom', 
+});
+Use code with caution.
+
+Step 3: Register the Font in Tailwind CSS
+
+Depending on your project's Tailwind version, register the CSS variable so you can use it as a standard utility class. [1] (https://stackoverflow.com/questions/74607996/how-to-add-custom-local-fonts-to-a-nextjs-13-tailwind-project), [2] (https://www.youtube.com/watch?v=DqGr8YwO52Q)
+
+🔹 For Tailwind v3 (tailwind.config.js):
+
+Open your configuration file and extend your fontFamily object using the CSS variable defined in Step 2: [1] (https://stackoverflow.com/questions/74607996/how-to-add-custom-local-fonts-to-a-nextjs-13-tailwind-project), [2] (https://www.youtube.com/watch?v=DqGr8YwO52Q)
+javascript
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {
+      fontFamily: {
+        // Now you can use utility classes like 'font-custom'
+        custom: ['var(--font-custom)', 'sans-serif'], 
+      },
+    },
+  },
+  plugins: [],
+}
+Use code with caution.
+
+🔹 For Tailwind v4 (src/app/globals.css):
+
+If your project uses the newer CSS-first Tailwind configuration, simply map the variable inside your @theme block: [1] (https://stackoverflow.com/questions/79558770/adding-custom-font-from-local-to-next-js-15-and-tailwind-css-4)
+css
+@theme {
+  --font-custom: var(--font-custom), sans-serif;
+}
+Use code with caution.
+
+Step 4: Inject the Font Globally
+
+Go back to your layout.js file and append both the .variable and your Tailwind font class directly to your <body> tag: [1] (https://www.youtube.com/watch?v=-PopcdesKnY&t=263), [2] (https://stackoverflow.com/questions/74607996/how-to-add-custom-local-fonts-to-a-nextjs-13-tailwind-project)
+jsx
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      {/* 
+        1. myCustomFont.variable passes the CSS variables down the tree
+        2. font-custom applies it as the global default text styling
+      */}
+      <body className={`${myCustomFont.variable} font-custom antialiased`}>
+        {children}
+      </body>
+    </html>
+  );
+}
+Use code with caution.
+Now, your custom font is active globally across your entire Next.js project! If you ever need to specifically enforce a bold version, you can simply write <h1 className="font-bold"> and Next.js will cleanly map it to your CustomFont-Bold.woff2 asset automatically. [1] (https://nextjs.org/docs/app/getting-started/fonts), [2] (https://www.linkedin.com/pulse/implementing-nextfont-local-fonts-nextjs-project-sushil-kundu-jrofe), [3] (https://www.youtube.com/watch?v=HxoAYJw7r5Q&t=630)
+Are you setting up a single brand font for the whole application, or do you need to register multiple different custom fonts (e.g., one for headers and a separate one for layout blocks)?
+
+
+
+Search for `font-remix|font-spacegrotesk|font-custom|remixicon|font-family`
+
+Yes, an app can use multiple fonts. But those two `variable` lines should **not** be in the same `localFont` options object: `variable` is a single option, so one value would overwrite the other.
+
+Define each font separately in `layout.js`:
+
+```js
+const spaceGrotesk = localFont({
+  src: "../../public/fonts/SpaceGrotesk-VariableFont_wght-DIScfSlK.ttf",
+  variable: "--font-spacegrotesk",
+});
+
+const remixIcons = localFont({
+  src: "../../public/fonts/remixicon.woff2",
+  variable: "--font-remix-icons",
+});
+```
+
+Then put both generated variables on the `<html>` element:
+
+```jsx
+<html
+  lang="en"
+  className={`${spaceGrotesk.variable} ${remixIcons.variable} antialiased`}
+>
+```
+
+Use Space Grotesk for regular text, and the Remix font only where you render Remix icon glyphs. In your CSS, map the text font to a **different** theme variable name, for example:
+
+```css
+@theme inline {
+  --font-space: var(--font-spacegrotesk);
+}
+
+.remix-icon {
+  font-family: var(--font-remix-icons);
+}
+```
+
+Then use Tailwind’s `font-space` class for text. The Remix font also needs the correct icon classes or glyph mappings to display icons; loading the font alone won’t map icon names to symbols.

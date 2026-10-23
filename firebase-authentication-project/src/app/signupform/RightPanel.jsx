@@ -8,6 +8,7 @@ import InputField from './InputField';
 // import { database } from "../../../configuration/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import Link from 'next/link';
+import AiLabLogo from '@/components/authentication/AiLabLogo';
 
 
 const RightPanel = () => {
@@ -237,7 +238,14 @@ const RightPanel = () => {
 
                 {/* for Heading */}
                 <div>
-                    <h1 className='font-medium text-2xl text-white text-wrap my-3'>Create your account</h1>
+                    <div className='flex items-center gap-2.5'>
+                        {/* Ai Lab Logo */}
+                        <AiLabLogo src="/assets/gemini.png" myClass={`w-10 h-10`} />
+                        {/* Heading */}
+                        <h1 className='font-medium text-2xl text-white text-wrap my-3'>
+                            Create your account
+                        </h1>
+                    </div>
                     <p className='text-[#9595B6] text-sm'>Step 1 of 3 — takes less than 2 minutes</p>
                     {/* Progress Bar */}
                     <div className="mt-1.5 h-2 bg-gray-700">

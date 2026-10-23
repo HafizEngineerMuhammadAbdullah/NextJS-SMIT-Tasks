@@ -9,7 +9,7 @@ const LeftPanel = () => {
 
     return (
         <div className='min-h-screen w-full p-10 flex flex-col items-center gap-y-3 flex-1 bg-white'>
-            <AiLabLogo />
+            <AiLabLogo src="/assets/myface1.png" myClass="w-auto h-auto" />
             <div className="text-center space-y-4">
                 <h1 className='text-2xl font-bold text-black'>Welcome to AI Labs</h1>
                 <p className='text-gray-600'>Your AI-powered solution for the future.</p>

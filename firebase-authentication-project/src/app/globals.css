@@ -2,6 +2,14 @@
 /* Global styles */
 /* Define CSS variables for light and dark themes */
 
+@theme {
+  --font-remix: var(--font-remix), sans-serif;
+  --font-space: var(--font-spacegrotesk);
+  --font-dmsans: var(--font-dmsans);
+  --font-comfortaa: var(--font-comfortaa);
+}
+
+
 /* Reset Default Space */
 @layer base {
   * {
@@ -9,11 +17,22 @@
     margin: 0;
     padding: 0;
   }
+
+  h1{
+    font-family: var(--font-space);
+  }
+  p{
+    font-family: var(--font-remix);
+  }
+
+  button{
+    font-family: var(--font-comfortaa);
+  }
 }
 
 
 @layer components {
-
+   
   /* for Container */
   .container {
     display: grid;
