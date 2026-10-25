@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react'
-// import styles from './SignupForm.module.css';
 import { TbArrowRight, TbEye, TbEyeClosed, TbBrandGoogle, TbBrandGithub, TbPassword } from 'react-icons/tb';
 import { motion } from 'motion/react';
 import InputField from './InputField';
@@ -9,6 +8,7 @@ import InputField from './InputField';
 import { ToastContainer, toast } from "react-toastify";
 import Link from 'next/link';
 import AiLabLogo from '@/components/authentication/AiLabLogo';
+import { INITIAL_FORM_DATA_SIGNUP_FORM } from '@/data/core';
 
 
 const RightPanel = () => {
@@ -16,13 +16,8 @@ const RightPanel = () => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    //  Form Data :-
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-    })
+    //  Initial Form Data :-
+    const [formData, setFormData] = useState(INITIAL_FORM_DATA_SIGNUP_FORM);
 
 
 
@@ -199,13 +194,9 @@ const RightPanel = () => {
             });
 
             alert(`Form submitted with data: ${JSON.stringify(formData)}`);
-
-            setFormData({
-                firstName: '',
-                lastName: '',
-                email: '',
-                password: '',
-            });
+            
+            // empty form data
+            setFormData(INITIAL_FORM_DATA_SIGNUP_FORM);
         } catch (error) {
             console.error(error);
             // console.error("Error sending data:", error.message);

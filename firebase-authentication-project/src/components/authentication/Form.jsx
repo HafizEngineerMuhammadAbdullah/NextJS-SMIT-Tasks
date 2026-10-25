@@ -14,20 +14,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import { motion } from "motion/react"
 import { BsGithub } from "react-icons/bs";
 import { TbArrowRight, TbEye, TbEyeClosed, TbBrandGoogle, TbBrandGithub, TbPassword } from 'react-icons/tb';
+import { INITIAL_FORM_DATA_SIGNIN_FORM } from '@/data/core';
 
 
 const inputStyle = 'w-full p-2 rounded-md border border-gray-700 focus:outline-none focus:ring focus:ring-black focus:border-black transition-colors duration-200 mt-2';
 
-//Initial formData
-const INITIAL_FORM_DATA = {
-    email: "",
-    password: ""
-};
 
 const Form = () => {
     // Use State Hook to track variables & update if required
     const [isShowPassword, setIsShowPassword] = useState(false);
-    const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+    const [formData, setFormData] = useState(INITIAL_FORM_DATA_SIGNIN_FORM);
     const [errorMsg, setErrorMsg] = useState("");
 
     // function to handle change event, it triggers(this function calls) whenever we type or remove sth from an input box
@@ -122,7 +118,7 @@ const Form = () => {
         //dispatch the data to firebase real time database database
 
 
-        setFormData(INITIAL_FORM_DATA);
+        setFormData(INITIAL_FORM_DATA_SIGNIN_FORM);
         showError("");
 
         toast.success('Successfully Submit the form', {

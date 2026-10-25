@@ -6,10 +6,6 @@ import { motion } from 'motion/react';
 import { options } from '@/data/core';
 
 
-// Now React won't recreate the array every render.
-// Tiny optimization
-
-
 const LeftPanel = () => {
   return (
     <>

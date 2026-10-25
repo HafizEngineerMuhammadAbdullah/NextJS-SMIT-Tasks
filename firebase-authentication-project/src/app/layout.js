@@ -1,5 +1,5 @@
-import { Geist, Geist_Mono } from "next/font/google";
 // src/app/layout.js
+import { Geist, Geist_Mono } from "next/font/google";
 import localFont from 'next/font/local';
 import "./globals.css";
 
@@ -13,27 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
-// Configure your custom local font
-// const myCustomFont = localFont({
-//   src: [
-//     {
-//       path: '../../public/fonts/remixicon.woff2',
-//       weight: '700',
-//       style: 'normal',
-//     },
-//     {
-//       path: '../../public/fonts/SpaceGrotesk-VariableFont_wght-DIScfSlK.ttf',
-//       weight: '700',
-//       style: 'normal',
-//     },
-//   ],
-//   // Define a CSS variable name so Tailwind can read it
-//   variable: '--font-remix',
-//   variable: '--font-spacegrotesk'
-// });
-
-
+// Configure Custom Local Font
 const spaceGrotesk = localFont({
   src: "../../public/fonts/SpaceGrotesk-VariableFont_wght-DIScfSlK.ttf",
   variable: "--font-spacegrotesk",
