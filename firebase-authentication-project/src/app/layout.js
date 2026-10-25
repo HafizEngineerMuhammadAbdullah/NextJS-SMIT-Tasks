@@ -2,6 +2,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from 'next/font/local';
 import "./globals.css";
+import { Providers } from "./ReduxjsToolkitForStateManagement/provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,7 +53,9 @@ export default function RootLayout({ children }) {
       // className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       className={`${remixFont.variable} ${spaceGrotesk.variable} ${comfortaa.variable} ${dmSans.variable} font- antialiased`}
     >
-      <body suppressHydrationWarning className="min-h-screen">{children}</body>
+      <Providers>
+        <body suppressHydrationWarning className="min-h-screen">{children}</body>
+      </Providers>
     </html>
   );
 }

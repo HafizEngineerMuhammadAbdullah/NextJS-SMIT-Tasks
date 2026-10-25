@@ -3,18 +3,21 @@ import React, { useState } from 'react'
 import { TbArrowRight, TbEye, TbEyeClosed, TbBrandGoogle, TbBrandGithub, TbPassword } from 'react-icons/tb';
 import { motion } from 'motion/react';
 import InputField from './InputField';
-// import { ref, push } from "firebase/database";
-// import { database } from "../../../configuration/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import Link from 'next/link';
 import AiLabLogo from '@/components/authentication/AiLabLogo';
 import { INITIAL_FORM_DATA_SIGNUP_FORM } from '@/data/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { signup } from '../ReduxjsToolkitForStateManagement/authSlice';
+import { useRouter } from 'next/navigation';
 
 
 const RightPanel = () => {
-    // const [showPassword, setShowPassword] = useState(false);
+    const dispatch = useDispatch();
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const router = useRouter();
 
     //  Initial Form Data :-
     const [formData, setFormData] = useState(INITIAL_FORM_DATA_SIGNUP_FORM);
@@ -147,10 +150,10 @@ const RightPanel = () => {
             return false;
         }
 
-        // Validate password (only letters and numbers allowed)
-        const passwordRegex = /^[A-Za-z0-9]{7,15}$/;
+        // Validate password (letters, numbers, special and capital character are allowed)
+        const passwordRegex = /^[A-Za-z0-9!@#$%^&*-+]{7,15}$/;
         if (!passwordRegex.test(password)) {
-            alert("Password should contain only letters and numbers (7-15 characters).");
+            alert("Password should contain letters,numbers,special characters and capital charatcter (7-15 characters).");
             return false;
         }
 
@@ -180,6 +183,7 @@ const RightPanel = () => {
             // });
 
             // await push(ref(database, "usersData"), formData);
+            await dispatch(signup(formData)).unwrap();
 
             toast('Form data sent successfully!', {
                 position: "top-center",
@@ -194,9 +198,13 @@ const RightPanel = () => {
             });
 
             alert(`Form submitted with data: ${JSON.stringify(formData)}`);
-            
+
             // empty form data
             setFormData(INITIAL_FORM_DATA_SIGNUP_FORM);
+
+
+            router.push("/");
+
         } catch (error) {
             console.error(error);
             // console.error("Error sending data:", error.message);
@@ -249,6 +257,7 @@ const RightPanel = () => {
                 </div>
 
                 {/* User Form */}
+                {/* form fields */}
                 {/* Controlled Component */}
                 <form className={`formGrid`} onSubmit={submitHandler}>
 
@@ -314,8 +323,8 @@ const RightPanel = () => {
                             changeHandler={changeHandler}
                             myClass={`input`}
                             autoComplete="new-password"
-                            pattern="[A-Za-z0-9]{7,15}"
-                            title="Letters & Numbers allowed"
+                            pattern="[A-Za-z0-9!@#$%^&*]{7,15}"
+                            title="Letters,Numbers,Capital & Special Characters are allowed"
                             required />
                         <button onClick={togglePasswordVisibility} type='button' className='absolute right-3 bottom-3 text-[#9595B6] cursor-pointer'>
                             {

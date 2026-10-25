@@ -13,18 +13,30 @@ import { FcGoogle } from "react-icons/fc";
 import { ToastContainer, toast } from 'react-toastify';
 import { motion } from "motion/react"
 import { BsGithub } from "react-icons/bs";
-import { TbArrowRight, TbEye, TbEyeClosed, TbBrandGoogle, TbBrandGithub, TbPassword } from 'react-icons/tb';
 import { INITIAL_FORM_DATA_SIGNIN_FORM } from '@/data/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from "@/app/ReduxjsToolkitForStateManagement/authSlice"
+import { useRouter } from 'next/navigation';
 
 
 const inputStyle = 'w-full p-2 rounded-md border border-gray-700 focus:outline-none focus:ring focus:ring-black focus:border-black transition-colors duration-200 mt-2';
 
 
-const Form = () => {
+const SigninForm = () => {
+
     // Use State Hook to track variables & update if required
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [formData, setFormData] = useState(INITIAL_FORM_DATA_SIGNIN_FORM);
     const [errorMsg, setErrorMsg] = useState("");
+
+    const router = useRouter("/")
+
+
+    const dispatch = useDispatch();
+
+    const { user, loading, error } = useSelector(
+        (state) => state.authReducer
+    );
 
     // function to handle change event, it triggers(this function calls) whenever we type or remove sth from an input box
     const handleChange = (e) => {
@@ -69,7 +81,7 @@ const Form = () => {
         const emailRegex = /^[A-Za-z0-9@]+@[^\s@]+\.[^\s@]+$/;
         const passwordRegex =
             /^[A-Za-z][A-Za-z0-9!@#%^&*$]{6,15}$/;
-        const hasSpecialChar = /[!@#%^&*$]/;
+        const hasSpecialChar = /[!@#%^&*$-+]/;
         const hasUppercase = /[A-Z]/;
         //  if any of one field is empty ,throw/display/show the error to the user 
         if (!formData.email.trim() || !formData.password.trim()) {
@@ -108,29 +120,61 @@ const Form = () => {
     };
 
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         // resist reloading the page(prevent the browser default behaviour i.e. reload the webpage when submit btn is pressed)
         e.preventDefault();
 
         // if the form doesn't validate successfully,return from here(because no need to submit formData to Firebase Database)
         if (!validateForm()) return;// validate the formData here
 
-        //dispatch the data to firebase real time database database
+        // Sign in the user here
+        try {
+            //dispatch the data to firebase real time database database
+            await dispatch(
+                login(
+                    {
+                        email: formData.email,
+                        password: formData.password
+                    }
+                )).unwrap();
+
+            setFormData(INITIAL_FORM_DATA_SIGNIN_FORM);
+            // Empty Error
+            showError("");
+
+            toast.success('Successfully Submit the form', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
 
 
-        setFormData(INITIAL_FORM_DATA_SIGNIN_FORM);
-        showError("");
+            // In short: use <Link> for user-clicked navigation; use useRouter() for navigation triggered by code.
+            // Use router.replace("/dashboard") instead of router.push(...) if you don’t want the user to return to the previous page with the browser’s Back button.
+            // Navigate after an action
+            // router.push("/dashboard");
+            router.replace("/dashboard");
 
-        toast.success('Successfully Submit the form', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
+        } catch (error) {
+            console.error(error);
+            // console.error("Error sending data:", error.message);
+            toast.error('Error Submitting Form.Please try again!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                // transition: Bounce,
+            });
+        }
 
     };
 
@@ -142,6 +186,7 @@ const Form = () => {
     };
 
     return (
+        // form fields
         <form className='h-auto w-full max-w-sm mt-1 space-y-4' onSubmit={submitHandler}>
             {/* for Email: */}
             <div>
@@ -178,7 +223,7 @@ const Form = () => {
                 {errorMsg && <p className='flex gap-2 text-sm text-center text-red-500 font-medium'><BiSolidError size={20} /> {errorMsg}</p>
                 }
             </div>
-            
+
 
             <div className='flex justify-between items-center'>
                 <div className='space-x-1'>
@@ -208,7 +253,7 @@ const Form = () => {
                     className={`${inputStyle} flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
                     {/* <div className='h-7 w-7 rounded-full border-2 border-white flex justify-center items-center'>< TbBrandGoogle size={20} /></div> */}
                     {/* < TbBrandGoogle size={20} /> */}
-                    <FcGoogle size={20}/>
+                    <FcGoogle size={20} />
                     <span className='text-black font-medium text-nowrap'>Sign in with Google</span>
                 </motion.button>
                 <motion.button
@@ -228,4 +273,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default SigninForm;

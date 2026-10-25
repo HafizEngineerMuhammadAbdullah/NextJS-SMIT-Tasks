@@ -10,7 +10,7 @@ const SignupForm = () => {
             < LeftPanel />
             < RightPanel />
         </div>
-    )
+    );
 }
 
 export default SignupForm

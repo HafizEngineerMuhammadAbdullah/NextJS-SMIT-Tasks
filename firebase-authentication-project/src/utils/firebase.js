@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 //  Initialize Firebase in Next.js
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,5 +23,7 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Realtime Database
 export const database = getDatabase(app);
+// Initialize Auth
+export const auth = getAuth(app);
 
 export default app;

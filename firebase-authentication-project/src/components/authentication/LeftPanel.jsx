@@ -1,7 +1,7 @@
 import React from 'react'
 import AiLabLogo from './AiLabLogo'
 import Link from 'next/link';
-import Form from './Form';
+import SigninForm from './SigninForm';
 
 
 
@@ -20,8 +20,8 @@ const LeftPanel = () => {
                 </div>
             </div>
 
-            {/* Form */}
-            <Form />
+            {/* SigninForm */}
+            <SigninForm />
             <Link href={"https://google.com"} className='text-center text-black font-bold text-md'>Have Trouble Signing in?</Link>
         </div>
     )
