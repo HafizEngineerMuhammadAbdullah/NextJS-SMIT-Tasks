@@ -1,7 +1,7 @@
 import React from 'react'
-const Button = ({ myClass, children, key, as: Component = "button" }) => {
+const Button = ({ myClass, children, as: Component = "button" }) => {
     return (
-        <Component key={key} className={myClass}>{children}</Component>
+        <Component className={myClass}>{children}</Component>
     )
 }
 

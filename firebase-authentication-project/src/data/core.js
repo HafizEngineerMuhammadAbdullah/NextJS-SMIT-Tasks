@@ -145,4 +145,47 @@ export const cardData = [
 
 
 
+export const notifications = [
+  {
+    id: "notif-1",
+    title: "OpenAI GPT-4o connected",
+    description: "Integration added via API key",
+    timestamp: "2m ago",
+    type: "integration", // Can be used to conditionally render the blue icon
+  },
+  {
+    id: "notif-2",
+    title: "Experiment #14 completed",
+    description: "Gemini vs Claude comparison",
+    timestamp: "18m ago",
+    type: "success", // Can be used to conditionally render the green checkmark
+  },
+  {
+    id: "notif-3",
+    title: "Rate limit warning",
+    description: "Anthropic Claude — 80% used",
+    timestamp: "1h ago",
+    type: "warning", // Can be used to conditionally render the yellow warning triangle
+  },
+  {
+    id: "notif-4",
+    title: "Team member invited",
+    description: "ali@dev.pk joined workspace",
+    timestamp: "3h ago",
+    type: "invite", // Can be used to conditionally render the purple user invite icon
+  }
+];
+
+// Data Array Structure
+// for API Usage panel
+export const apiUsageData = [
+  { id: "api-1", provider: "OpenAI", current: 6240, max: 10000, color: "bg-blue-500" },
+  { id: "api-2", provider: "Anthropic", current: 8100, max: 10000, color: "bg-amber-500" },
+  { id: "api-3", provider: "Google Gemini", current: 3500, max: 10000, color: "bg-emerald-600" },
+  { id: "api-4", provider: "Mistral", current: 1200, max: 10000, color: "bg-blue-600" },
+  { id: "api-5", provider: "ElevenLabs", current: 4800, max: 10000, color: "bg-emerald-600" },
+];
+
+
+
 // export { options };
