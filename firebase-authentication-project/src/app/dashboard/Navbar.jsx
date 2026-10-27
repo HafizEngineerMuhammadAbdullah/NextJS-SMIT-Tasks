@@ -17,9 +17,9 @@ const Navbar = () => {
 
     return (
         // Header
-        <header className='w-full px-4 py-1.5 bg-white/20'>
+        <header className='w-full bg-white/20'>
             {/* Navbar */}
-            <nav className='w-full flex justify-between items-center border-b border-gray-700'>
+            <nav className='w-full px-4 py-1.5 flex justify-between items-center border-b border-gray-700'>
 
                 {/* Left Side */}
                 <div>

@@ -1,19 +1,12 @@
-import LeftPanel from '@/components/authentication/LeftPanel'
-import RightPanel from '@/components/authentication/RightPanel'
 import React from 'react'
+import Dashboard from './dashboard/Dashboard'
 
-// Alhamdulillah
 const page = () => {
   return (
-    <div className='min-h-screen grid grid-cols-1 lg:grid-cols-2'>
-      {/* Left Side: Form Panel */}
-       {/* LEFT SIDE: REDUX / FIREBASE AUTH FORM */}
-      <LeftPanel />
-      {/* Right Side: Graphic Panel (Hidden on mobile, visible on desktop) */}
-      {/* RIGHT SIDE: THE REACT FLOW NETWORK PANEL */}
-      <RightPanel />
+    <div>
+      <Dashboard />
     </div>
   )
-}
+};
 
 export default page

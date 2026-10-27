@@ -5,7 +5,11 @@ import { HiOutlineUsers } from "react-icons/hi2";
 import { AiTwotoneExperiment } from "react-icons/ai";
 import { IoMdSearch } from "react-icons/io";
 import { BsPlus } from "react-icons/bs";
-// Now React won't recreate the array every render.
+import { CiLocationArrow1 } from "react-icons/ci";
+import { MdAccessTime } from "react-icons/md";
+import { TbTrendingUp, TbTrendingDown } from "react-icons/tb";
+import { IoHardwareChipSharp, IoCheckmark } from "react-icons/io5";
+// Now React won't recreate the array ever
 // Tiny optimization
 export const options = [
   {
@@ -106,8 +110,38 @@ export const primaryButtons = [
   {
     icon: BsPlus
   }
+];
 
-]
+export const cardData = [
+  {
+    icon: IoHardwareChipSharp,
+    content: "Models connected",
+    number: "9",
+    trendingIcon: TbTrendingUp,
+    footer: "3 this week"
+  },
+  {
+    icon: CiLocationArrow1,
+    content: "API calls today",
+    number: "2,847",
+    trendingIcon: TbTrendingUp,
+    footer: "12% vs yesterday"
+  },
+  {
+    icon: MdAccessTime,
+    content: "Avg response",
+    number: "340ms",
+    trendingIcon: TbTrendingDown,
+    footer: "8ms slower"
+  },
+  {
+    icon: IoCheckmark,
+    content: "Uptime",
+    number: "99.9%",
+    trendingIcon: TbTrendingUp,
+    footer: " All systems go"
+  }
+];
 
 
 

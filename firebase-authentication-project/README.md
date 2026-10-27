@@ -916,3 +916,46 @@ function SigninForm() {
 Use `router.replace("/dashboard")` instead of `router.push(...)` if you don’t want the user to return to the previous page with the browser’s Back button.
 
 **In short:** use `<Link>` for user-clicked navigation; use `useRouter()` for navigation triggered by code.
+
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\firebase-authentication-project\\src\\app\\dashboard\\Card.jsx"
+}
+
+Search for `<Card|icon=`
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\firebase-authentication-project\\src\\app\\dashboard\\Main.jsx"
+}
+
+Search for `icon\s*:`
+
+Search for `cardData`
+
+Read , lines 100 to 150
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\firebase-authentication-project\\src\\data\\core.js",
+  "view_range": [
+    100,
+    150
+  ]
+}
+
+`icon` is a React component passed from `cardData`, but in JSX `<icon />` starts with a lowercase letter, so React treats it as a built-in HTML tag—not as your component. That’s why the icon doesn’t render.
+
+Alias it with an uppercase name when destructuring the prop, then render that name:
+
+```jsx
+const Card = ({ icon: Icon, content, number, footer }) => (
+  <div className="p-4 h-50 w-50 border rounded-2xl border-gray-900">
+    <div className="flex items-center gap-0.5">
+      <Icon size={20} />
+      <span className="text-md font-sans">{content}</span>
+    </div>
+  </div>
+);
+```
+
+Your `card data` supplies icon components, and `Main.jsx` passes each one to `Card.jsx`. Also, `key` is handled by React and isn’t available as a normal prop inside `Card`, so you can remove it from `Card`’s destructured props and from its inner `<div>`.

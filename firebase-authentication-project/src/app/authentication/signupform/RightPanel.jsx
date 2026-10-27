@@ -5,10 +5,10 @@ import { motion } from 'motion/react';
 import InputField from './InputField';
 import { ToastContainer, toast } from "react-toastify";
 import Link from 'next/link';
-import AiLabLogo from '@/components/authentication/AiLabLogo';
+import AiLabLogo from '@/app/authentication/signinform/AiLabLogo';
 import { INITIAL_FORM_DATA_SIGNUP_FORM } from '@/data/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { signup } from '../ReduxjsToolkitForStateManagement/authSlice';
+import { signup } from '../../ReduxjsToolkitForStateManagement/authSlice';
 import { useRouter } from 'next/navigation';
 
 
@@ -202,8 +202,7 @@ const RightPanel = () => {
             // empty form data
             setFormData(INITIAL_FORM_DATA_SIGNUP_FORM);
 
-
-            router.push("/");
+            router.push("/authentication/signinform");
 
         } catch (error) {
             console.error(error);
@@ -423,7 +422,7 @@ const RightPanel = () => {
                     {/* Row-8 */}
                     {/* Signin Option */}
                     <div className='mt-2'>
-                        <p className='text-[#9595B6] text-sm text-center'>Already have an account? <Link href="/" className='text-[#534AB7] cursor-pointer'>Sign in</Link></p>
+                        <p className='text-[#9595B6] text-sm text-center'>Already have an account? <Link href="/authentication/signinform" className='text-[#534AB7] cursor-pointer'>Sign in</Link></p>
                     </div>
 
                     {/* Toast Container */}

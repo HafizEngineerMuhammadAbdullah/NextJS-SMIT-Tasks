@@ -1,18 +1,15 @@
 "use client"
 import React, { useState } from 'react'
-import { LuEye } from "react-icons/lu";
-import { LuEyeOff } from "react-icons/lu";
+import { LuEye, LuEyeOff } from "react-icons/lu";
 import { BiSolidError } from "react-icons/bi";
 import { TbFaceIdError } from "react-icons/tb";
-import { MdRunningWithErrors } from "react-icons/md";
-import { MdError } from "react-icons/md";
+import { MdRunningWithErrors, MdError } from "react-icons/md";
 import { RiSignalWifiErrorFill } from "react-icons/ri";
-import { BiSolidCommentError } from "react-icons/bi";
-import { BiSolidMessageRoundedError } from "react-icons/bi";
+import { BiSolidCommentError, BiSolidMessageRoundedError } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
+import { BsGithub } from "react-icons/bs";
 import { ToastContainer, toast } from 'react-toastify';
 import { motion } from "motion/react"
-import { BsGithub } from "react-icons/bs";
 import { INITIAL_FORM_DATA_SIGNIN_FORM } from '@/data/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from "@/app/ReduxjsToolkitForStateManagement/authSlice"
@@ -22,6 +19,18 @@ import { useRouter } from 'next/navigation';
 const inputStyle = 'w-full p-2 rounded-md border border-gray-700 focus:outline-none focus:ring focus:ring-black focus:border-black transition-colors duration-200 mt-2';
 
 
+const ICON = [
+    BiSolidError,
+    TbFaceIdError,
+    MdRunningWithErrors,
+    MdError,
+    RiSignalWifiErrorFill,
+    BiSolidCommentError,
+    BiSolidMessageRoundedError
+];
+
+const RandomIcon = ICON[Math.floor(Math.random() * ICON.length)];
+
 const SigninForm = () => {
 
     // Use State Hook to track variables & update if required
@@ -29,7 +38,7 @@ const SigninForm = () => {
     const [formData, setFormData] = useState(INITIAL_FORM_DATA_SIGNIN_FORM);
     const [errorMsg, setErrorMsg] = useState("");
 
-    const router = useRouter("/")
+    const router = useRouter("/");
 
 
     const dispatch = useDispatch();
@@ -129,7 +138,7 @@ const SigninForm = () => {
 
         // Sign in the user here
         try {
-            //dispatch the data to firebase real time database database
+            //dispatch the data to firebase real time database 
             await dispatch(
                 login(
                     {
@@ -158,7 +167,7 @@ const SigninForm = () => {
             // Use router.replace("/dashboard") instead of router.push(...) if you don’t want the user to return to the previous page with the browser’s Back button.
             // Navigate after an action
             // router.push("/dashboard");
-            router.replace("/dashboard");
+            router.replace("/");
 
         } catch (error) {
             console.error(error);
@@ -219,8 +228,13 @@ const SigninForm = () => {
             </div>
 
             {/* for ErrorMessage */}
+            {/* The syntax error is in the tag name: JSX doesn’t allow an array lookup like ICON[...] directly as a component tag. It expects a component name, such as <SomeIcon />. The outer { ... } is valid here; it’s the computed tag name that causes the error */}
             <div>
-                {errorMsg && <p className='flex gap-2 text-sm text-center text-red-500 font-medium'><BiSolidError size={20} /> {errorMsg}</p>
+                {errorMsg && <p className='flex gap-2 text-sm text-center text-red-500 font-medium'>
+                    <RandomIcon size={20} />
+                    {/* <BiSolidError size={20} /> */}
+                    {errorMsg}
+                </p>
                 }
             </div>
 
@@ -246,6 +260,7 @@ const SigninForm = () => {
 
             {/* Signin with Google Or Github */}
             <div className='flex sm:justify-center gap-3 items-center flex-col sm:flex-row'>
+
                 <motion.button
                     type='button'
                     whileHover={{ scale: 1.03 }}
@@ -256,6 +271,7 @@ const SigninForm = () => {
                     <FcGoogle size={20} />
                     <span className='text-black font-medium text-nowrap'>Sign in with Google</span>
                 </motion.button>
+
                 <motion.button
                     type='button'
                     whileHover={{ scale: 1.03 }}

@@ -5,7 +5,7 @@
 // import { Background, Controls } from '@xyflow/react';
 // import '@xyflow/react/dist/style.css';
 
-import RightSideWorkflow from "@/components/authentication/RightSideWorkflow"
+import RightSideWorkflow from "@/app/authentication/signinform/RightSideWorkflow"
 
 
 // const initialNodes = [
