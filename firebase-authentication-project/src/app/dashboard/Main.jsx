@@ -4,6 +4,7 @@ import Card from './Card';
 import { cardData } from '@/data/core'
 import NotificationPanel from './NotificationPanel';
 import ApiUsagePanel from './ApiUsagePanel';
+import ConnectedModelCards from './ConnectedModelCards';
 
 const Main = () => {
     return (
@@ -29,6 +30,10 @@ const Main = () => {
                     <NotificationPanel />
                     <ApiUsagePanel />
                 </div>
+            </section>
+            {/* Section : 4 */}
+            <section>
+                <ConnectedModelCards />
             </section>
         </main>
     )

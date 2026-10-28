@@ -188,4 +188,80 @@ export const apiUsageData = [
 
 
 
+export const connectedModelsData = [
+  {
+    id: "model-1",
+    name: "GPT-4o",
+    provider: "OpenAI",
+    type: "Chat",
+    status: "connected", // true / green dot
+    iconText: "G",
+    brandBg: "bg-[#10a37f]" // OpenAI Teal
+  },
+  {
+    id: "model-2",
+    name: "Claude Sonnet",
+    provider: "Anthropic",
+    type: "Chat",
+    status: "connected",
+    iconText: "C",
+    brandBg: "bg-[#d97706]" // Anthropic Amber/Orange
+  },
+  {
+    id: "model-3",
+    name: "Gemini Pro",
+    provider: "Google",
+    type: "Chat",
+    status: "connected",
+    iconText: "G",
+    brandBg: "bg-[#1a73e8]" // Google Blue
+  },
+  {
+    id: "model-4",
+    name: "Mistral Large",
+    provider: "Mistral",
+    type: "Chat",
+    status: "connected",
+    iconText: "M",
+    brandBg: "bg-[#111827]" // Dark Charcoal/Black
+  },
+  {
+    id: "model-5",
+    name: "Suno v4",
+    provider: "Suno",
+    type: "Audio",
+    status: "connected",
+    iconText: "S",
+    brandBg: "bg-[#f97316]" // Suno Orange
+  },
+  {
+    id: "model-6",
+    name: "ElevenLabs",
+    provider: "ElevenLabs",
+    type: "Voice",
+    status: "connected",
+    iconText: "11",
+    brandBg: "bg-[#4f46e5]" // Indigo
+  },
+  {
+    id: "model-7",
+    name: "Replit AI",
+    provider: "Replit",
+    type: "Code",
+    status: "disconnected", // false / gray dot
+    iconText: "R",
+    brandBg: "bg-[#374151]" // Neutral Slate
+  },
+  {
+    id: "model-8",
+    name: "Perplexity",
+    provider: "Perplexity",
+    type: "Search",
+    status: "disconnected",
+    iconText: "Px",
+    brandBg: "bg-[#0ea5e9]" // Sky Blue
+  }
+];
+
+
 // export { options };
