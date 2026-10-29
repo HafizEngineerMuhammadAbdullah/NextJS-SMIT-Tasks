@@ -18,6 +18,7 @@ import { motion } from "motion/react"; // Import motion engine
 // We can use standard React state (useEffect) to trigger Tailwind's built-in transition classes once the component mounts onto the screen.
 // Option 2: Framer Motion (Highly Recommended for Premium Feel)
 // If you want a highly customized, bouncy, or spring-like look that behaves exactly like a native app dashboard, use Framer Motion.
+// API usage bars — per-provider usage showing how much of each quota has been consumed — directly ties back to the connected models from the login page.
 export default function ApiUsagePanel() {
 
   const [isMounted, setIsMounted] = useState(false);
@@ -29,7 +30,7 @@ export default function ApiUsagePanel() {
 
 
   return (
-    <div className="w-full max-w-sm rounded-2xl bg-[#121212] p-5 text-gray-200 shadow-xl border border-neutral-900 font-sans">
+    <div className="w-full max-w-sm rounded-2xl bg-[#121212] p-5 text-gray-200 shadow-md border border-neutral-900 font-sans hover:shadow-gray-700 hover:-translate-y-1.5 transition-all cursor-pointer">
       {/* Header Row */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-[15px] font-bold text-white tracking-wide">

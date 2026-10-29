@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { primaryButtons } from '@/data/core';
 import Button from './Button';
 
+// Top bar — page title, search, notifications bell, and a “New experiment” primary action button.
 // Header + Navbar
-const Navbar = () => {
+const TopBar = () => {
 
     const navLinks = [
         'Home',
@@ -56,4 +57,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default TopBar

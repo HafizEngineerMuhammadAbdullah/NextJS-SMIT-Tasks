@@ -3,7 +3,7 @@ import React from 'react';;
 import { LuTriangleAlert, LuUserPlus } from 'react-icons/lu';
 import { TbPlug } from "react-icons/tb";
 import { FaCheck } from "react-icons/fa6";
-
+// Recent activity — live feed of events (model connected, experiment completed, rate limit warning, team invite) with colored icon badges and timestamps.
 const NotificationPanel = () => {
 
     // Helper function to render the exact icon based on notification type
@@ -40,7 +40,7 @@ const NotificationPanel = () => {
 
 
     return (
-        <div className='w-full max-w-sm p-9 rounded-2xl  bg-[#121212] text-gray-200 shadow-xl border border-neutral-900'>
+        <div className='w-full max-w-sm p-9 rounded-2xl  bg-[#121212] text-gray-200 shadow-md border border-neutral-900 hover:shadow-gray-700 hover:-translate-y-1.5 transition-all cursor-pointer'>
             <div className='py-2 flex justify-between'>
                 <p className='font-bold '>Recent Activity</p>
                 <button type="button" className='px-2 py-1.5 border border-gray-200 rounded-lg'>See All</button>

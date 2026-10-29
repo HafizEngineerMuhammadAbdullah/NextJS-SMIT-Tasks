@@ -959,3 +959,271 @@ const Card = ({ icon: Icon, content, number, footer }) => (
 ```
 
 Your `card data` supplies icon components, and `Main.jsx` passes each one to `Card.jsx`. Also, `key` is handled by React and isn’t available as a normal prop inside `Card`, so you can remove it from `Card`’s destructured props and from its inner `<div>`.
+
+<svg
+            xmlns="http://w3.org"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2.5}
+            stroke="currentColor"
+            className="h-4 w-4"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+
+
+Here's what the dashboard includes — perfect for after the sign-in transition:
+
+**Sidebar** — brand logo, navigation sections (Main, Workspace, System), and the signed-in user's avatar + email at the bottom so it feels personal right after login.
+
+**Top bar** — page title, search, notifications bell, and a "New experiment" primary action button.
+
+**4 stat cards** — models connected, API calls today, average response time, and uptime — the kind of numbers a user wants to see at a glance.
+
+**Recent activity** — live feed of events (model connected, experiment completed, rate limit warning, team invite) with colored icon badges and timestamps.
+
+**API usage bars** — per-provider usage showing how much of each quota has been consumed — directly ties back to the connected models from the login page.
+
+**Connected models grid** — the same 9 AI model nodes from the login page's right panel, now shown as manageable cards with green/gray status dots and an "Add model" tile at the end.
+
+The "Add model ↗" button is wired to send a message to chat if you click it. Want me to now build this as actual React + Redux Toolkit + Tailwind code?
+
+
+
+Great work building this out! Let me go through everything systematically — bugs first, then structure, then UI/UX improvements.
+
+---
+
+## 🔴 Critical Bugs
+
+### Bug 1 — Sidebar height is wrong
+```jsx
+// ❌ Wrong — hardcoded viewport multiplier makes no sense
+<nav className='h-[160vh] px-4 py-2 flex flex-col gap-4'>
+
+// ✅ Fix — let it grow naturally
+<nav className='flex-1 px-4 py-2 flex flex-col gap-4 overflow-y-auto'>
+```
+
+### Bug 2 — User info at bottom overlaps content
+```jsx
+// ❌ Wrong — absolute positioning inside a flex column causes overlap
+<div className='p-2 absolute bottom-1 left-2 border-t border-gray-700 flex items-center gap-3'>
+
+// ✅ Fix — push it to the bottom naturally with margin-top: auto
+<div className='mt-auto p-3 border-t border-gray-700 flex items-center gap-3'>
+```
+
+### Bug 3 — `<Link>` inside `<button>` is invalid HTML
+```jsx
+// ❌ Wrong — nesting interactive elements is illegal HTML
+<button className='...'>
+    <link.icon />
+    <Link href={link.text}>Dashboard</Link>
+</button>
+
+// ✅ Fix — make the whole row a Next.js Link, style it as a row
+<Link
+    href={`/${link.text.toLowerCase()}`}
+    className='group px-2 py-1 rounded-md flex gap-3 items-center hover:bg-gray-500'
+>
+    <link.icon className='shrink-0 group-hover:text-blue-400' size={22} />
+    {isSidebarOpen && <span className='font-medium text-md'>{link.text}</span>}
+</Link>
+```
+
+### Bug 4 — Text hidden with `opacity-0 hidden` but still in DOM causing layout shift
+```jsx
+// ❌ Wrong — this takes space even when hidden on some browsers
+<span className={`${isSidebarOpen ? '' : 'opacity-0 hidden pointer-events-none'}`}>
+
+// ✅ Fix — conditional render is cleaner and cheaper
+{isSidebarOpen && <span className='font-medium text-md'>{link.text}</span>}
+```
+
+### Bug 5 — `href` generates wrong URLs
+```jsx
+// ❌ Wrong — "Dashboard".toLowerCase() = "dashboard" is fine
+// but "API Calls".toLowerCase() = "api calls" — space in URL is invalid
+
+// ✅ Fix — use a dedicated href property in your data
+export const sidebarLinksOne = [
+    { icon: MdDashboard, text: "Dashboard", href: "/dashboard" },
+    { icon: MdCpu,       text: "Models",    href: "/models"    },
+];
+
+// Then use link.href directly
+<Link href={link.href}>
+```
+
+---
+
+## 🟠 Structure Problems
+
+### Problem 1 — `isHover` state is unnecessary
+You use `isHover` only to swap icons. This can be done with pure Tailwind `group-hover` — no state needed:
+
+```jsx
+// ❌ Unnecessary — causes extra re-renders
+const [isHover, setIsHover] = useState(false);
+
+// ✅ Better — use Tailwind group-hover on the button
+<button
+    onClick={() => setIsSidebarOpen(prev => !prev)}
+    className='group shrink-0 p-2 hover:bg-gray-700 rounded-md cursor-pointer'
+>
+    {isSidebarOpen
+        ? <VscLayoutSidebarLeftDock size={20} />
+        : <>
+            {/* show logo by default, swap to open icon on hover */}
+            <Logo src="/assets/cursor-ai.png" myClass="block w-8 h-8 group-hover:hidden" alt="logo" />
+            <VscLayoutSidebarRightDock size={20} className="hidden group-hover:block" />
+          </>
+    }
+</button>
+```
+
+### Problem 2 — Three separate `.map()` calls for sidebar links
+You have `sidebarLinksOne`, `sidebarLinksTwo`, `sidebarLinksThree` as separate arrays with separate map calls. This makes it hard to add sections later.
+
+✅ Better data structure — group them by section:
+```js
+// data/core.js
+export const sidebarSections = [
+    {
+        title: "Main",
+        links: [
+            { icon: MdDashboard, text: "Dashboard", href: "/dashboard" },
+            { icon: MdCpu,       text: "Models",    href: "/models"    },
+            { icon: TbPlug,      text: "Integrations", href: "/integrations" },
+        ]
+    },
+    {
+        title: "Workspace",
+        links: [
+            { icon: MdScience, text: "Experiments", href: "/experiments" },
+            { icon: MdHistory, text: "History",     href: "/history"    },
+            { icon: MdGroup,   text: "Team",        href: "/team"       },
+        ]
+    },
+    {
+        title: "System",
+        links: [
+            { icon: MdSettings, text: "Settings", href: "/settings" },
+            { icon: MdHelp,     text: "Help",     href: "/help"     },
+        ]
+    }
+];
+```
+
+Then your sidebar becomes one clean loop:
+```jsx
+<nav className='flex-1 px-3 py-2 flex flex-col gap-1 overflow-y-auto'>
+    {sidebarSections.map((section) => (
+        <div key={section.title} className='mb-3'>
+            {isSidebarOpen && (
+                <p className='px-2 mb-1 text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                    {section.title}
+                </p>
+            )}
+            {section.links.map((link) => (
+                <Link
+                    key={link.href}
+                    href={link.href}
+                    className='group flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-700 transition-colors'
+                >
+                    <link.icon size={20} className='shrink-0 text-gray-400 group-hover:text-blue-400 transition-colors' />
+                    {isSidebarOpen && (
+                        <span className='text-sm font-medium text-gray-300 group-hover:text-white'>
+                            {link.text}
+                        </span>
+                    )}
+                </Link>
+            ))}
+        </div>
+    ))}
+</nav>
+```
+
+---
+
+## 🟡 UI/UX Improvements
+
+### Improvement 1 — Active link has no visual indicator
+Right now nothing tells the user which page they are on. Use Next.js `usePathname()`:
+
+```jsx
+"use client";
+import { usePathname } from 'next/navigation';
+
+const Sidebar = () => {
+    const pathname = usePathname();
+
+    // Inside the link:
+    <Link
+        href={link.href}
+        className={`group flex items-center gap-3 px-2 py-2 rounded-lg transition-colors
+            ${pathname === link.href
+                ? 'bg-gray-700 text-white'      // active state
+                : 'hover:bg-gray-700 text-gray-400 hover:text-white'
+            }`}
+    >
+        <link.icon
+            size={20}
+            className={pathname === link.href ? 'text-blue-400' : 'group-hover:text-blue-400'}
+        />
+        {isSidebarOpen && <span>{link.text}</span>}
+    </Link>
+```
+
+### Improvement 2 — Sidebar collapse animation is abrupt
+Add a smooth width transition:
+```jsx
+// ✅ Smooth collapse with transition
+<aside className={`
+    min-h-screen flex flex-col bg-[#121212] border-r border-gray-800
+    transition-all duration-300 ease-in-out
+    ${isSidebarOpen ? 'w-[240px]' : 'w-[68px]'}
+`}>
+```
+
+### Improvement 3 — Collapsed sidebar shows nothing useful
+When collapsed, show a tooltip on hover so the user knows what each icon is. New concept — use Tailwind's `group` + absolute tooltip:
+
+```jsx
+<Link href={link.href} className='group relative flex items-center ...'>
+    <link.icon size={20} />
+
+    {/* Tooltip — only shows when sidebar is collapsed */}
+    {!isSidebarOpen && (
+        <span className='
+            absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-xs rounded
+            opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none
+            whitespace-nowrap z-50
+        '>
+            {link.text}
+        </span>
+    )}
+
+    {isSidebarOpen && <span>{link.text}</span>}
+</Link>
+```
+
+---
+
+## 📊 Summary Table
+
+| # | Issue | Type | Fix effort |
+|---|---|---|---|
+| 1 | `h-[160vh]` on nav | 🔴 Bug | 1 min |
+| 2 | `absolute bottom-1` on user row | 🔴 Bug | 1 min |
+| 3 | `<Link>` inside `<button>` | 🔴 Bug | 5 min |
+| 4 | `opacity-0 hidden` instead of conditional render | 🔴 Bug | 5 min |
+| 5 | `href` from `.toLowerCase()` with spaces | 🟠 Bug | 2 min |
+| 6 | `isHover` state — use Tailwind instead | 🟠 Structure | 5 min |
+| 7 | 3 separate map loops → 1 grouped structure | 🟠 Structure | 10 min |
+| 8 | No active link indicator | 🟡 UX | 5 min |
+| 9 | No sidebar transition animation | 🟡 UI | 2 min |
+| 10 | No tooltips when collapsed | 🟡 UI | 10 min |
+
+Fix bugs 1–5 first — they are breaking the layout right now. Then tackle 6 and 7 together since refactoring the data structure makes 8, 9, and 10 much easier to add. You'll end up with a sidebar that's half the code and twice as good. 💪

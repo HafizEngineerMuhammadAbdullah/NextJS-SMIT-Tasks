@@ -52,38 +52,112 @@ export const INITIAL_FORM_DATA_SIGNIN_FORM = {
   password: ""
 };
 
+// ❌ Wrong — "Dashboard".toLowerCase() = "dashboard" is fine
+// but "API Calls".toLowerCase() = "api calls" — space in URL is invalid
+
+// ✅ Fix — use a dedicated href property in your data
+// export const sidebarLinksOne = [
+//     { icon: MdDashboard, text: "Dashboard", href: "/dashboard" },
+//     { icon: MdCpu,       text: "Models",    href: "/models"    },
+// ];
+
+// Then use link.href directly
+{/* <Link href={link.href}></Link> */ }
+
+
+// data/core.js
+// export const sidebarSections = [
+//     {
+//         title: "Main",
+//         links: [
+//             { icon: MdDashboard, text: "Dashboard", href: "/dashboard" },
+//             { icon: MdCpu,       text: "Models",    href: "/models"    },
+//             { icon: TbPlug,      text: "Integrations", href: "/integrations" },
+//         ]
+//     },
+//     {
+//         title: "Workspace",
+//         links: [
+//             { icon: MdScience, text: "Experiments", href: "/experiments" },
+//             { icon: MdHistory, text: "History",     href: "/history"    },
+//             { icon: MdGroup,   text: "Team",        href: "/team"       },
+//         ]
+//     },
+//     {
+//         title: "System",
+//         links: [
+//             { icon: MdSettings, text: "Settings", href: "/settings" },
+//             { icon: MdHelp,     text: "Help",     href: "/help"     },
+//         ]
+//     }
+// ];
+
+// data/core.js
+export const sidebarSections = [
+  {
+    title: "Main",
+    links: [
+      { icon: LuLayoutDashboard, text: "Dashboard", href: "/dashboard" },
+      { icon: FaMicrochip, text: "Models", href: "/models" },
+      { icon: TbPlug, text: "Integrations", href: "/integrations" },
+      { icon: TbBrandGoogleAnalytics, text: "Analytics", href: '/analytics' }
+    ]
+  },
+  {
+    title: "Workspace",
+    links: [
+      { icon: AiTwotoneExperiment, text: "Experiments", href: "/experiments" },
+      { icon: LuHistory, text: "History", href: "/history" },
+      { icon: HiOutlineUsers, text: "Team", href: "/team" },
+    ]
+  },
+  {
+    title: "System",
+    links: [
+      { icon: TbSettings, text: "Settings", href: "/settings" },
+      { icon: TbHelpHexagon, text: "Help", href: "/help" },
+    ]
+  }
+];
 
 export const sidebarLinksOne = [
   {
     icon: LuLayoutDashboard,
-    text: "Dashboard"
+    text: "Dashboard",
+    href: "/dashboard"
   },
   {
     icon: FaMicrochip,
-    text: "Models"
+    text: "Models",
+    href: "/models"
   },
   {
     icon: TbPlug,
-    text: "Integrations"
+    text: "Integrations",
+    href: "/integrations"
   },
   {
     icon: TbBrandGoogleAnalytics,
-    text: "Analytics"
+    text: "Analytics",
+    href: '/analytics'
   }
 ];
 
 export const sidebarLinksTwo = [
   {
     icon: AiTwotoneExperiment,
-    text: "Experiments"
+    text: "Experiments",
+    href: "/experiments"
   },
   {
     icon: LuHistory,
-    text: "History"
+    text: "History",
+    href: "/history"
   },
   {
     icon: HiOutlineUsers,
-    text: "Team"
+    text: "Team",
+    href: "/team"
   }
 ];
 
@@ -91,11 +165,13 @@ export const sidebarLinksTwo = [
 export const sidebarLinksThree = [
   {
     icon: TbSettings,
-    text: "Settings"
+    text: "Settings",
+    href: "/settings"
   },
   {
     icon: TbHelpHexagon,
-    text: "Help"
+    text: "Help",
+    href: "/help"
   }
 ];
 
