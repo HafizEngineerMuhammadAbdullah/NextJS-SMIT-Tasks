@@ -1546,3 +1546,23 @@ Fix bugs 1–5 first — they are breaking the layout right now. Then tackle 6 a
 // };
 
 // export default Right;
+
+
+{/* </div> */}
+      {/* <div style={{ width: '100vw', height: '75vh' }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          fitView
+        />
+      </div> */}
+
+      {/* <div style={{ height: '100%', width: '100%' }}>
+        <ReactFlow nodes={initialNodes} edges={initialEdges}>
+          <Background />
+          <Controls />
+        </ReactFlow>
+      </div> */}

@@ -20,16 +20,16 @@ const GAP = 130;
 // The 8 outer tiles. col/row place each one on a 3x3 grid (0, 1, 2).
 // tone "light" = white tile, tone "dark" = black tile.
 const OUTER_MODELS = [
-  { id: "meta",       label: "Meta",       col: 0, row: 0, Icon: SiMeta,         tone: "light", color: "#0866FF" },
-  { id: "replit",     label: "Replit",     col: 1, row: 0, Icon: SiReplit,       tone: "dark" },
-  { id: "perplexity", label: "Perplexity", col: 2, row: 0, Icon: SiPerplexity,   tone: "light", color: "#20808D" },
+  { id: "meta", label: "Meta", col: 0, row: 0, Icon: SiMeta, tone: "light", color: "#0866FF" },
+  { id: "replit", label: "Replit", col: 1, row: 0, Icon: SiReplit, tone: "dark" },
+  { id: "perplexity", label: "Perplexity", col: 2, row: 0, Icon: SiPerplexity, tone: "light", color: "#20808D" },
 
-  { id: "claude",     label: "Claude",     col: 0, row: 1, Icon: SiAnthropic,    tone: "dark" },
-  { id: "v0",         label: "v0",         col: 2, row: 1, Icon: SiVercel,       tone: "dark" },
+  { id: "claude", label: "Claude", col: 0, row: 1, Icon: SiAnthropic, tone: "dark" },
+  { id: "v0", label: "v0", col: 2, row: 1, Icon: SiVercel, tone: "dark" },
 
-  { id: "chatgpt",    label: "ChatGPT",    col: 0, row: 2, Icon: AiOutlineOpenAI,       tone: "light", color: "#10A37F" },
-  { id: "gemini",     label: "Gemini",     col: 1, row: 2, Icon: SiGooglegemini, tone: "dark" },
-  { id: "firebase",   label: "Firebase",   col: 2, row: 2, Icon: SiFirebase,     tone: "light", color: "#FFA000" },
+  { id: "chatgpt", label: "ChatGPT", col: 0, row: 2, Icon: AiOutlineOpenAI, tone: "light", color: "#10A37F" },
+  { id: "gemini", label: "Gemini", col: 1, row: 2, Icon: SiGooglegemini, tone: "dark" },
+  { id: "firebase", label: "Firebase", col: 2, row: 2, Icon: SiFirebase, tone: "light", color: "#FFA000" },
 ];
 
 const HUB = { id: "hub", label: "AI Labs", col: 1, row: 1, Icon: LuSmile };

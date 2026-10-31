@@ -95,8 +95,7 @@ const SigninForm = () => {
                 progress: undefined,
                 theme: "dark",
             });
-            setEmail("");
-            setPassword("");
+            setFormData(INITIAL_FORM_DATA_SIGNIN_FORM);
         } catch (error) {
             toast.error('Google Login Failed!', {
                 position: "top-center",
@@ -129,8 +128,7 @@ const SigninForm = () => {
                 progress: undefined,
                 theme: "dark",
             });
-            setEmail("");
-            setPassword("");
+            setFormData(INITIAL_FORM_DATA_SIGNIN_FORM);
         } catch (error) {
             toast.error('Github Login Failed!', {
                 position: "top-center",
