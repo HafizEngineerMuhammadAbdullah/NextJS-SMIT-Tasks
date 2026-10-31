@@ -1227,3 +1227,322 @@ When collapsed, show a tooltip on hover so the user knows what each icon is. New
 | 10 | No tooltips when collapsed | 🟡 UI | 10 min |
 
 Fix bugs 1–5 first — they are breaking the layout right now. Then tackle 6 and 7 together since refactoring the data structure makes 8, 9, and 10 much easier to add. You'll end up with a sidebar that's half the code and twice as good. 💪
+
+
+// "use client";
+
+// import React from 'react';
+// import { ReactFlow, Background, Controls } from '@xyflow/react';
+// import '@xyflow/react/dist/style.css';
+// import Image from 'next/image';
+
+// // 1. Define the custom styling for our Nodes
+// const hubNodeStyle = {
+//   // background: '#3b82f6', // Tailwind blue-500
+//   color: '#fff',
+//   padding: '20px',
+//   borderRadius: '20px',
+//   fontWeight: 'bold',
+//   border: '4px solid #1d4ed8',
+//   boxShadow: '0 10px 15px -3px rgba(59, 130, 246, 0.3)',
+//   // textAlign: 'center',
+//   width: 100,
+//   height: 100,
+//   // display: 'flex',
+//   // alignItems: 'center',
+//   // justifyContent: 'center',
+// };
+
+// const toolNodeStyle = {
+//   background: '#ffffff',
+//   color: '#1f2937', // Tailwind gray-800
+//   padding: '12px 18px',
+//   borderRadius: '12px',
+//   border: '2px solid #e5e7eb',
+//   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+//   fontWeight: '600',
+//   fontSize: '14px',
+//   textAlign: 'center',
+//   width: 140,
+// };
+
+// // 2. Define the Nodes with JSX templates in data.label
+// const initialNodes = [
+//   // Central Hub Node with a main layout logo
+//   {
+//     id: 'center-hub',
+//     data: {
+//       label: (
+//         <Image src="/assets/myface1.png" width={100} height={100} className="w-full h-full object-cover" />
+//       )
+//     },
+// position: { x: 200, y: 200 },
+// style: hubNodeStyle,
+//   },
+// // Top 3 Nodes
+// {
+//   id: 'tool-1',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         <Image src="/logos/chatgpt.jpg" width={50} height={50} alt="ChatGPT" className="w-5 h-5 shrink-0" />
+//         <span className="truncate">ChatGPT</span>
+//       </div>
+//     )
+//   },
+//   position: { x: 0, y: 0 },
+//   style: toolNodeStyle
+// },
+// {
+//   id: 'tool-2',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         <Image src="/logos/meta.jpg" width={50} height={50} alt="Claude AI" className="w-5 h-5 rounded shrink-0 object-contain" />
+//         <span className="truncate">Claude AI</span>
+//       </div>
+//     )
+//   },
+//   position: { x: 200, y: -50 },
+//   style: toolNodeStyle
+// },
+// {
+//   id: 'tool-3',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         {/* <span className="text-base flex-shrink-0">🎨</span> Replace with your Midjourney img logo */}
+//         <Image src="" alt="Claude AI" width={50} height={50} className="w-5 h-5 rounded shrink-0 object-contain" />
+//         <span className="truncate">Midjourney</span>
+//       </div>
+//     )
+//   },
+//   position: { x: 400, y: 0 },
+//   style: toolNodeStyle
+// },
+// // Middle Row Left & Right
+// {
+//   id: 'tool-4',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         {/* <span className="text-base font-black text-black flex-shrink-0">v0</span> */}
+//         <Image src="" width={50} height={50} alt="Claude AI" className="w-5 h-5 rounded shrink-0 object-contain" />
+//         <span className="truncate">v0.dev</span>
+//       </div>
+//     )
+//   },
+//   position: { x: -50, y: 235 },
+//   style: toolNodeStyle
+// },
+// {
+//   id: 'tool-5',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         <Image src="" alt="Gemini" width={50} height={50} className="w-5 h-5 shrink-0" />
+//         <span className="truncate">Gemini</span>
+//       </div>
+//     )
+//   },
+//   position: { x: 450, y: 235 },
+//   style: toolNodeStyle
+// },
+// // Bottom 3 Nodes
+// {
+//   id: 'tool-6',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         <Image src="" alt="Firebase" width={50} height={50} className="w-5 h-5 shrink-0" />
+//         <span className="truncate">Firebase</span>
+//       </div>
+//     )
+//   },
+//   position: { x: 0, y: 450 },
+//   style: toolNodeStyle
+// },
+// {
+//   id: 'tool-7',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         <Image src="" alt="Redux Toolkit" width={50} height={50} className="w-5 h-5 shrink-0" />
+//         <span className="truncate">Redux Toolkit</span>
+//       </div>
+//     )
+//   },
+//   position: { x: 200, y: 500 },
+//   style: toolNodeStyle
+// },
+// {
+//   id: 'tool-8',
+//     data: {
+//     label: (
+//       <div className="flex items-center gap-2">
+//         <img src="" width={50} height={50} alt="Tailwind CSS" className="w-5 h-5 shrink-0" />
+//         <span className="truncate">Tailwind CSS</span>
+//       </div>
+//     )
+//   },
+//   position: { x: 400, y: 450 },
+//   style: toolNodeStyle
+// },
+// ];
+
+
+// // // 2. Define the Nodes and their 3x3 geometric grid coordinates
+// // const initialNodes = [
+// //   // Central Hub Node placed exactly at the origin (Center)
+// //   {
+// //     id: 'center-hub',
+// //     data: {
+// //       label: 'AI Central Hub',
+
+// //     },
+// //     position: { x: 200, y: 200 },
+// //     style: hubNodeStyle,
+// //   },
+// //   // Top 3 Nodes
+// //   { id: 'tool-1', data: { label: 'ChatGPT' }, position: { x: 0, y: 0 }, style: toolNodeStyle },
+// //   { id: 'tool-2', data: { label: 'Claude AI' }, position: { x: 200, y: -50 }, style: toolNodeStyle },
+// //   { id: 'tool-3', data: { label: 'Midjourney' }, position: { x: 400, y: 0 }, style: toolNodeStyle },
+// //   // Middle Row Left & Right
+// //   { id: 'tool-4', data: { label: 'v0.dev' }, position: { x: -50, y: 235 }, style: toolNodeStyle },
+// //   { id: 'tool-5', data: { label: 'Gemini' }, position: { x: 450, y: 235 }, style: toolNodeStyle },
+// //   // Bottom 3 Nodes
+// //   { id: 'tool-6', data: { label: 'Firebase' }, position: { x: 0, y: 450 }, style: toolNodeStyle },
+// //   { id: 'tool-7', data: { label: 'Redux Toolkit' }, position: { x: 200, y: 500 }, style: toolNodeStyle },
+// //   { id: 'tool-8', data: { label: 'Tailwind CSS' }, position: { x: 400, y: 450 }, style: toolNodeStyle },
+// // ];
+
+// // 3. Define the Edges (Connections) with dotted/dashed properties
+// const initialEdges = [
+//   { id: 'e1', source: 'center-hub', target: 'tool-1', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+//   { id: 'e2', source: 'center-hub', target: 'tool-2', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+//   { id: 'e3', source: 'center-hub', target: 'tool-3', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+//   { id: 'e4', source: 'center-hub', target: 'tool-4', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+//   { id: 'e5', source: 'center-hub', target: 'tool-5', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+//   { id: 'e6', source: 'center-hub', target: 'tool-6', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+//   { id: 'e7', source: 'center-hub', target: 'tool-7', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+//   { id: 'e8', source: 'center-hub', target: 'tool-8', animated: true, style: { strokeDasharray: '5,5', stroke: '#9ca3af' } },
+// ];
+
+// const RightSideWorkflow = () => {
+//   return (
+//     <div className="w-full h-full min-h-[500px] bg-slate-50 relative rounded-2xl overflow-hidden border border-slate-200">
+//       <ReactFlow
+//         nodes={initialNodes}
+//         edges={initialEdges}
+//         fitView
+//         nodesDraggable={true} // Set to false if you want it completely locked and static
+//         nodesConnectable={false}
+//         zoomOnScroll={false}
+//         preventScrolling={false}
+//       >
+//         {/* Adds a fine-grained dot background grid matching your design requirement */}
+//         <Background color="#cbd5e1" gap={16} size={1} />
+//         <Controls showInteractive={false} />
+//       </ReactFlow>
+//     </div>
+//   );
+// }
+
+
+// export default RightSideWorkflow;
+
+
+// import React from "react";
+// import Image from "next/image";
+// import { SiMetaai } from "react-icons/si";
+// import { RiOpenaiFill } from "react-icons/ri";
+// import { TbBrandElectronicArts } from "react-icons/tb";
+
+// const Right = () => {
+//   return (
+//     <div className="w-full md:w-1/2 bg-[#F8FAFC] min-h-screen flex flex-col items-center justify-center p-8 relative overflow-hidden">
+
+//       {/* Top Headings */}
+//       <div className="text-center mb-12 z-10">
+//         <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+//           Select &amp; Combine &amp; Integrate.
+//         </h2>
+//         <p className="text-sm text-gray-500 max-w-sm mx-auto">
+//           Develop and refine AI models using our intuitive interface.
+//         </p>
+//       </div>
+
+//       {/* Grid Canvas Section for AI Icons */}
+//       <div className="relative w-full max-w-md aspect-square flex items-center justify-center">
+
+//         {/* Background Dotted Connecting Lines */}
+//         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+//           <div className="w-4/5 h-4/5 border border-dashed border-gray-300 rounded-2xl transform rotate-45"></div>
+//           <div className="absolute w-full h-px border-t border-dashed border-gray-300"></div>
+//           <div className="absolute h-full w-px border-l border-dashed border-gray-300"></div>
+//         </div>
+
+//         {/* Center Main Card (AI Labs) */}
+//         <div className="z-10 p-5 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 transform hover:scale-105 transition-transform duration-300 cursor-pointer">
+//           <Image
+//             width={40}
+//             height={40}
+//             src="/assests/image1.jpg"
+//             alt="AI Labs Central Logo"
+//             className="rounded-lg"
+//           />
+//         </div>
+
+//         {/* --- Outer Surrounding Icons --- */}
+
+//         {/* Top Center */}
+//         <div className="absolute top-4 left-1/2 -translate-x-1/2 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-slate-900">
+//           <span className="font-bold text-lg">R</span>
+//         </div>
+
+//         {/* Top Left (Meta) */}
+//         <div className="absolute top-8 left-8 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-blue-600">
+//           <SiMetaai className="text-xl" />
+//         </div>
+
+//         {/* Top Right (ElevenLabs) */}
+//         <div className="absolute top-8 right-8 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-slate-800">
+//           <TbBrandElectronicArts className="text-xl" />
+//         </div>
+
+//         {/* Middle Left */}
+//         <div className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-slate-900">
+//           <div className="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center text-white text-xs font-bold">
+//             a
+//           </div>
+//         </div>
+
+//         {/* Middle Right */}
+//         <div className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-slate-900">
+//           <div className="w-5 h-5 border-2 border-slate-900 rounded-sm"></div>
+//         </div>
+
+//         {/* Bottom Left (OpenAI / ChatGPT) */}
+//         <div className="absolute bottom-8 left-8 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-emerald-600">
+//           <RiOpenaiFill className="text-xl" />
+//         </div>
+
+//         {/* Bottom Center */}
+//         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-slate-900">
+//           <div className="w-5 h-5 bg-black rounded flex items-center justify-center text-white text-xs font-serif">
+//             S
+//           </div>
+//         </div>
+
+//         {/* Bottom Right */}
+//         <div className="absolute bottom-8 right-8 p-3 bg-white rounded-xl shadow-md border border-gray-100 text-slate-900">
+//           <div className="w-5 h-5 border-2 border-dashed border-slate-800 rounded-full"></div>
+//         </div>
+
+//       </div>
+
+//     </div>
+//   );
+// };
+
+// export default Right;

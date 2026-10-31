@@ -12,7 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { motion } from "motion/react"
 import { INITIAL_FORM_DATA_SIGNIN_FORM } from '@/data/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from "@/app/ReduxjsToolkitForStateManagement/authSlice"
+import { login, githubLogin, googleLogin } from "@/app/ReduxjsToolkitForStateManagement/authSlice"
 import { useRouter } from 'next/navigation';
 
 
@@ -80,7 +80,71 @@ const SigninForm = () => {
             progress: undefined,
             theme: "dark",
         });
-    }
+    };
+    // Handle Google Login
+    const handleGoogleLogin = async () => {
+        try {
+            await dispatch(googleLogin()).unwrap();
+            toast.success('Signed in with Google successfully.', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            setEmail("");
+            setPassword("");
+        } catch (error) {
+            toast.error('Google Login Failed!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                // transition: Bounce,
+            });
+        }
+    };
+
+
+
+
+    // Handle GitHub Login
+    const handleGithubLogin = async () => {
+        try {
+            await dispatch(githubLogin()).unwrap();
+            toast.success('Signed in with Github successfully.', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+            setEmail("");
+            setPassword("");
+        } catch (error) {
+            toast.error('Github Login Failed!', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                // transition: Bounce,
+            });
+        }
+    };
 
     // performs Validation before submission
     const validateForm = () => {
@@ -261,8 +325,10 @@ const SigninForm = () => {
             {/* Signin with Google Or Github */}
             <div className='flex sm:justify-center gap-3 items-center flex-col sm:flex-row'>
 
+                {/* Signin with Google */}
                 <motion.button
                     type='button'
+                    onClick={handleGoogleLogin}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     className={`${inputStyle} flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>
@@ -272,8 +338,10 @@ const SigninForm = () => {
                     <span className='text-black font-medium text-nowrap'>Sign in with Google</span>
                 </motion.button>
 
+                {/* Signin with Github */}
                 <motion.button
                     type='button'
+                    onClick={handleGithubLogin}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                     className={`${inputStyle} flex-1 flex justify-center items-center gap-x-2 cursor-pointer`}>

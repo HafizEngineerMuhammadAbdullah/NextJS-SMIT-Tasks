@@ -1,6 +1,7 @@
 import React from 'react'
 import LeftPanel from './LeftPanel'
-import RightPanel from './RightPanel'
+// import RightPanel from './RightPanel'
+import RightSideWorkflow from './RightSideWorkflow';
 
 // Alhamdulillah
 const page = () => {
@@ -11,7 +12,8 @@ const page = () => {
             <LeftPanel />
             {/* Right Side: Graphic Panel (Hidden on mobile, visible on desktop) */}
             {/* RIGHT SIDE: THE REACT FLOW NETWORK PANEL */}
-            <RightPanel />
+            {/* <RightPanel /> */}
+            <RightSideWorkflow />
         </div>
     )
 };

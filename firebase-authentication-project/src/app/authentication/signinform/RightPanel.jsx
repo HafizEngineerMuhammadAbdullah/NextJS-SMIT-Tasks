@@ -55,7 +55,7 @@ const RightPanel = () => {
 
 
        {/* <div className="hidden lg:flex items-center justify-center p-8 bg-slate-100"> */}
-        <RightSideWorkflow />
+        {/* <RightSideWorkflow /> */}
       {/* </div> */}
       {/* <div style={{ width: '100vw', height: '75vh' }}>
         <ReactFlow

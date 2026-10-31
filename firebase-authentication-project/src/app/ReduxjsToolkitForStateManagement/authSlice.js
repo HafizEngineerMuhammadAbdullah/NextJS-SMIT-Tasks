@@ -1,6 +1,6 @@
-import { auth } from "@/utils/firebase";
+import { auth, googleProvider, githubProvider } from "@/utils/firebase";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup } from "firebase/auth";
 
 const initialState = {
     user: null,
@@ -8,9 +8,9 @@ const initialState = {
     error: null,
 };
 
-
-// Signup
+// for Signup
 // The thunk can receive the whole form object
+// Async thunk for email/password signup
 export const signup = createAsyncThunk(
     "auth/signup",
     async (formData) => {
@@ -32,6 +32,7 @@ export const signup = createAsyncThunk(
 
 
 // Login/Signin
+// Async thunk for email/password login
 export const login = createAsyncThunk(
     "auth/login",
     async ({ email, password }) => {
@@ -47,6 +48,32 @@ export const login = createAsyncThunk(
     }
 );
 
+// Async thunk for Google sign-in
+export const googleLogin = createAsyncThunk(
+    'auth/googleLogin',
+    async (_, { rejectWithValue }) => {
+        try {
+            const userCredential = await signInWithPopup(auth, googleProvider);
+            return { uid: userCredential.user.uid, email: userCredential.user.email };
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
+// Async thunk for GitHub sign-in
+export const githubLogin = createAsyncThunk(
+    'auth/githubLogin',
+    async (_, { rejectWithValue }) => {
+        try {
+            const userCredential = await signInWithPopup(auth, githubProvider);
+            return { uid: userCredential.user.uid, email: userCredential.user.email };
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 // Logout(Signout)
 export const logout = createAsyncThunk("auth/logout", async () => {
     await signOut(auth);
@@ -57,6 +84,7 @@ const authSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
+        // Signup states
         builder
             .addCase(signup.pending, (state) => {
                 state.loading = true;
@@ -70,7 +98,8 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-
+            
+            // Login states
             .addCase(login.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -86,7 +115,15 @@ const authSlice = createSlice({
 
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
-            });
+            })
+            // Google login states
+            .addCase(googleLogin.pending, (state) => { state.loading = true; state.error = null; })
+            .addCase(googleLogin.fulfilled, (state, action) => { state.loading = false; state.user = action.payload; })
+            .addCase(googleLogin.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+            // GitHub login states
+            .addCase(githubLogin.pending, (state) => { state.loading = true; state.error = null; })
+            .addCase(githubLogin.fulfilled, (state, action) => { state.loading = false; state.user = action.payload; })
+            .addCase(githubLogin.rejected, (state, action) => { state.loading = false; state.error = action.payload; });
     },
 });
 
