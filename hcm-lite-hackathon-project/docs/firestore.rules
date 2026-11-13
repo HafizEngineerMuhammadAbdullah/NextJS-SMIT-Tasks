@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isOwner(uid) { return signedIn() && request.auth.uid == uid; }
+    function myRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+    function setupPath() { return /databases/$(database)/documents/meta/setup; }
+
+    // First-run flag. Public read so the sign-up page can show the company name.
+    match /meta/setup {
+      allow read: if true;
+      allow create: if signedIn()
+                    && !exists(setupPath())
+                    && request.resource.data.keys().hasOnly(['completed', 'companyName', 'createdAt'])
+                    && request.resource.data.completed == true;
+      allow update, delete: if false;
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || (signedIn() && myRole() in ['admin', 'hr']);
+
+      // Self-registration. Admin is only allowed while the company is NOT set up yet
+      // (the same transaction creates meta/setup). HR/Employee need the company to exist.
+      allow create: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(
+             ['uid','firstName','lastName','fullName','email','phone','role','status','mustChangePassword','createdAt'])
+        && request.resource.data.uid == uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.status == 'active'
+        && request.resource.data.mustChangePassword == false
+        && request.resource.data.createdAt == request.time
+        && (
+          (request.resource.data.role == 'admin' && !exists(setupPath()) && existsAfter(setupPath()))
+          || (request.resource.data.role in ['hr', 'employee'] && exists(setupPath()))
+        );
+
+      // Owners may change only their phone. Admin can manage everyone.
+      allow update: if (isOwner(uid)
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['phone']))
+        || (signedIn() && myRole() == 'admin');
+
+      allow delete: if false;
+    }
+  }
+}

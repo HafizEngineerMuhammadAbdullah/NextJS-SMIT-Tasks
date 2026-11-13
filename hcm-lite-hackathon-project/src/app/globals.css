@@ -1,0 +1,17 @@
+/* Tailwind v4 (default in new create-next-app). On Tailwind v3 replace this line with:
+   @tailwind base; @tailwind components; @tailwind utilities; */
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
