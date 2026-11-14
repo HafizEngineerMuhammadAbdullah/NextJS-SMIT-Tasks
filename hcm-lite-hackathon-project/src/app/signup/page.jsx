@@ -14,6 +14,7 @@ import { signupSchema } from "@/lib/validation";
 import { getSetupStatus, signUp } from "@/lib/authService";
 import { PUBLIC_SIGNUP_ROLES, ROLE_META, ROUTES, dashboardPath, roleStyle } from "@/lib/constants";
 
+// Initial Form Data
 const INITIAL = {
   firstName: "", lastName: "", email: "", phone: "", companyName: "",
   password: "", confirmPassword: "", terms: false,
@@ -56,6 +57,7 @@ function SignupForm() {
   });
 
   return (
+    // Main Content
     <main style={roleStyle(role)} className="grid min-h-screen place-items-center bg-[#0F1629] px-4 py-8 sm:py-12">
       <div className="relative w-full max-w-[1040px] overflow-hidden rounded-[28px] bg-[#1C2640] shadow-2xl shadow-black/40 ring-1 ring-white/10">
         {/* decor, taken from the brief's teal circles */}

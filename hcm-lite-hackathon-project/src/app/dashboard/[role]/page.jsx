@@ -1,43 +1,33 @@
 "use client";
-import { useParams, useRouter } from "next/navigation";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
-import Button from "@/components/auth/Button";
-import { useAuth } from "@/context/AuthContext";
-import { ROLE_META, ROUTES, roleStyle } from "@/lib/constants";
+import { FiAlertTriangle } from "react-icons/fi";
+import { motion } from "motion/react";
+import { useDashboard } from "@/context/DashboardContext";
+import DashboardSkeleton from "@/components/dashboard/Skeleton";
+import AdminDashboard from "@/components/dashboard/roles/AdminDashboard";
+import HrDashboard from "@/components/dashboard/roles/HrDashboard";
+import EmployeeDashboard from "@/components/dashboard/roles/EmployeeDashboard";
 
-// Placeholder so you can see the guard working. Replace with your real dashboards (module M7).
-function Dashboard() {
-  const { profile, logout } = useAuth();
-  const router = useRouter();
-  const meta = ROLE_META[profile.role];
-
-  return (
-    <main style={roleStyle(profile.role)} className="grid min-h-screen place-items-center bg-[#0F1629] px-4">
-      <div className="w-full max-w-md rounded-[28px] bg-[#1C2640] p-8 text-white ring-1 ring-white/10">
-        <span className="inline-block rounded-full bg-[color:var(--accent)] px-3 py-1 text-xs font-bold text-[color:var(--on-accent)]">{meta.label}</span>
-        <h1 className="mt-4 text-2xl font-bold">Welcome, {profile.firstName}</h1>
-        <p className="mt-1 text-sm text-slate-400">{profile.email}</p>
-        <p className="mt-6 text-sm text-slate-300">You&apos;re signed in. The {meta.label} dashboard goes here.</p>
-        <Button
-          variant="secondary-dark"
-          className="mt-6"
-          onClick={async () => {
-            await logout();
-            router.replace(ROUTES.signin);
-          }}
-        >
-          Sign out
-        </Button>
-      </div>
-    </main>
-  );
-}
+const VIEWS = { admin: AdminDashboard, hr: HrDashboard, employee: EmployeeDashboard };
 
 export default function RoleDashboardPage() {
-  const { role } = useParams();
+  const { status, data, role, reload } = useDashboard();
+  const View = VIEWS[role];
+
+  if (!data && status === "loading") return <DashboardSkeleton />;
+  if (status === "error") {
+    return (
+      <div role="alert" className="grid place-items-center rounded-[24px] border border-rose-200 bg-white px-6 py-16 text-center">
+        <span className="grid h-12 w-12 place-items-center rounded-full bg-rose-50 text-rose-500"><FiAlertTriangle className="h-5 w-5" aria-hidden /></span>
+        <p className="mt-4 text-base font-bold text-slate-900">We couldn&apos;t load your dashboard</p>
+        <p className="mt-1 max-w-[40ch] text-sm text-slate-500">Check your connection and Firestore rules, then try again.</p>
+        <button type="button" onClick={reload} className="mt-5 rounded-full bg-[color:var(--accent)] px-6 py-2.5 text-sm font-bold text-[color:var(--on-accent)]">Try again</button>
+      </div>
+    );
+  }
+  // While new filters load we keep the old numbers on screen, slightly dimmed, so nothing jumps.
   return (
-    <ProtectedRoute role={role}>
-      <Dashboard />
-    </ProtectedRoute>
+    <motion.div animate={{ opacity: status === "loading" ? 0.55 : 1 }} transition={{ duration: 0.2 }} aria-busy={status === "loading"}>
+      <View data={data} />
+    </motion.div>
   );
 }
