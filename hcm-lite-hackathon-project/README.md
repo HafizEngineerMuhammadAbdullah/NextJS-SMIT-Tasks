@@ -96,3 +96,120 @@ Demo vs real: the brief says the system starts empty. With `NEXT_PUBLIC_DEMO_DAT
 
 Not real yet: employee check-in uses the browser clock, leave approve/reject only changes local state,
 the assistant is rule-based, and the payslip PDF button is disabled. Each has a comment saying what the backend call should be.
+
+
+I’ll inspect the tagged layout and that project’s local instructions, then make the smallest fix and verify it.
+
+"Read" failed
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\AGENTS.md"
+}
+Tool execution failed: Path does not exist
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\app\\dashboard\\[role]\\layout.jsx"
+}
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\package.json"
+}
+
+Search for `useParams|Suspense`
+
+Find files matching `**/AGENTS.md`
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\app\\dashboard\\[role]\\[section]\\page.jsx"
+}
+
+Find files matching `src/components/auth/ProtectedRoute.*`
+
+Find files matching `src/components/dashboard/Shell.*`
+
+Find files matching `src/context/DashboardContext.*`
+
+Search for `function ProtectedRoute|function DashboardProvider|export default function Sh...`
+
+Ran terminal command: git status --short; Get-ChildItem -Force
+
+The tagged layout and the matching section page both call `useParams()`, so either can trigger this Next.js prerender error. I’m checking their client/server boundaries before replacing the hook with the route `params` prop.
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\components\\auth\\ProtectedRoute.jsx"
+}
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\context\\DashboardContext.jsx"
+}
+
+Read , lines 1 to 75
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\components\\dashboard\\Shell.jsx",
+  "view_range": [
+    1,
+    75
+  ]
+}
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\eslint.config.mjs"
+}
+
+Find files matching `AGENTS.md`
+
+Edit , 
+
+Both route segments now read dynamic values from Next.js’s server-provided `params`, avoiding the client hook that caused prerendering to block. I’ll run lint and a production build to verify the changes.
+
+Ran terminal command: npm run lint -- "src/app/dashboard/[role]/layout.jsx" "src/app/dashboard/[role]/[section]/page.jsx"
+Tool execution failed with exit code -4058
+
+Ran terminal command: npm run build
+Tool execution failed with exit code -4058
+
+Ran terminal command: Set-Location 'C:\Users\A1\Desktop\Task Folder\SmitTasks\NextJsTasks\hcm-lite-hackathon-project'; npm run lint -- "src/app/dashboard/[role]/layout.jsx" "src/app/dashboard/[role]/[section]/page.jsx"
+
+Ran terminal command: Set-Location 'C:\Users\A1\Desktop\Task Folder\SmitTasks\NextJsTasks\hcm-lite-hackathon-project'; npm run build
+Tool execution failed with exit code 1
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\app\\layout.jsx"
+}
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\context\\AuthContext.jsx"
+}
+
+Read 
+Completed with input: {
+  "path": "C:\\Users\\A1\\Desktop\\Task Folder\\SmitTasks\\NextJsTasks\\hcm-lite-hackathon-project\\src\\components\\ui\\FullPageLoader.jsx"
+}
+
+Ran terminal command: git diff -- "hcm-lite-hackathon-project/src/app/dashboard/[role]/layout.jsx" "hcm-lite-hackathon-project/src/app/dashboard/[role]/[section]/page.jsx"
+
+The build revealed this dashboard is intentionally runtime-rendered: the layout already had a commented `instant = false` note. I’ll enable that route setting so Next doesn’t try to prerender its runtime-dependent auth/dashboard shell.
+
+Edit 
+
+Ran terminal command: Set-Location 'C:\Users\A1\Desktop\Task Folder\SmitTasks\NextJsTasks\hcm-lite-hackathon-project'; npm run lint -- "src/app/dashboard/[role]/layout.jsx" "src/app/dashboard/[role]/[section]/page.jsx"
+
+Ran terminal command: Set-Location 'C:\Users\A1\Desktop\Task Folder\SmitTasks\NextJsTasks\hcm-lite-hackathon-project'; npm run build
+
+Ran terminal command: git diff --check; git status --short; git diff --stat -- "hcm-lite-hackathon-project/src/app/dashboard/[role]/layout.jsx" "hcm-lite-hackathon-project/src/app/dashboard/[role]/[section]/page.jsx"
+
+This happened because `useParams()` is a **client hook**, and the route value is only known at request time. With Cache Components enabled, Next.js can’t use that runtime-only value during prerendering unless it’s handled under Suspense or the route is allowed to render at request time.
+
+I updated the dashboard layout to read the route’s server-provided `params` and enabled `instant = false`, which fits this auth-dependent dashboard. I also made the same `useParams()` change in the section page so it wouldn’t trigger the error there.
+
+- `layout.jsx`
+- `page.jsx`
+
+**Verified:** lint passed and the production build completed.

@@ -1,12 +1,11 @@
-"use client";
 import Link from "next/link";
-import { notFound, useParams } from "next/navigation";
+import { notFound } from "next/navigation";
 import { motion } from "motion/react";
 import { NAV, hrefFor } from "@/lib/dashboard/nav";
 
 // Placeholder for modules that aren't built yet (employees, leave, payroll ...).
-export default function SectionPage() {
-  const { role, section } = useParams();
+export default async function SectionPage({ params }) {
+  const { role, section } = await params;
   const item = NAV[role]?.find((n) => n.id === section);
   if (!item) notFound();
   const Icon = item.icon;
